@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>css11_grid02</title>
+<style type="text/css">
+div, span {
+	color: black;
+	border: 1px solid;
+	font-size: 1.2vw;
+	margin: 0;
+
+	/*  
+	margin : 요소와 요소간의 거리
+	padding : 요소의 외곽과 컨텐츠간의 거리
+	*/
+}
+
+h2 {
+	color: red;
+}
+</style>
+</head>
+<body>
+
+	<h2>block요소 배치하기</h2>
+	<div style="height: 200px; width: 30%;">black : 한줄에 여러개의 block
+		요소를 배치하고 싶다면?</div>
+
+	<div style="height: 200px; width: 30%;">black : 한줄에 여러개의 block
+		요소를 배치하고 싶다면?</div>
+
+	<h3>float 속성 활용하기</h3>
+	<div style="overflow: hidden;">
+		<div style="height: 200px; width: 30%; float: left;">
+			black : 한줄에 여러개의 block 요소를 배치하고 싶다면? <br>float : left <br>
+			float left 속성이 적용된 요소는 좌측으로 적렬된다.<br> float 속성은 보통흐름(normar
+			flow)에서 해당 요소를 제외시킬 수 있다.
+
+		</div>
+
+		<div style="height: 200px; width: 30%; float: left;">black : 한줄에
+			여러개의 block 요소를 배치하고 싶다면?</div>
+
+
+		<div style="height: 150px; width: 6%; float: left;">float : left</div>
+		<div style="height: 150px; width: 6%; float: left;">float : left</div>
+		<div style="height: 150px; width: 6%; float: left;">float : left</div>
+		<div style="height: 150px; width: 6%; float: right;">float :
+			right</div>
+	</div>
+	<div style="background-color: lightblue">
+		<pre>
+overflow : hidden 은 본래 영역을 벗어난 컨텐츠를 숨기는 역할을 하는 속성이지만, float 속성을 clear 해주기도 한다.
+</pre>
+	</div>
+	<h2>display:inline-block</h2>
+
+	<div style="display: block">block 요소는 display 속성값이 block 이다.
+		display:inline-block 이라는 속성은 해당 요소를 inline 요소처럼 다루면서 width와 height의
+		크기를 지정할 수 있도록 한다.</div>
+	<div style="height: 150px; width: 20%; display: inline-block;">display:inline-block</div>
+	<div style="height: 150px; width: 20%; display: inline-block;">display:inline-block</div>
+	<div>아래에 있는데 안겹쳐진다.</div>
+</body>
+</html>

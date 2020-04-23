@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link rel="shortcut icon" href="#">
+	<title>title</title>
+	<meta charset="UTF-8">
+	<style>
+		body,
+		html {
+			height: 100%;
+		}
+
+		.bookData {
+			height: 25%;
+			width: 80%;
+			overflow: hidden;
+			text-align: center;
+			font-size: 1vw;
+		}
+
+		.bookData div {
+			float: left;
+			width: 25%;
+			height: 90%;
+			border: 1px solid black;
+		}
+
+		.bookData :nth-child(1) {
+			height: 10% !important;
+		}
+
+		.thum {
+			width: 10% !important;
+		}
+	</style>
+
+</head>
+
+<body>
+	<H1>도서검색</H1>
+	<div id="searchWrapper">
+		<input type="text" id="search" class="search">
+		<button id="bt" onclick="newSearch()">검색</button>
+	</div><br><br>
+
+	<div class="wrapper">
+		<div class="bookData">
+			<div class="title">
+				<h3>제목</h3>
+			</div>
+			<div class="price">
+				<h3>가격</h3>
+			</div>
+			<div class="publisher">
+				<h3>출판사</h3>
+			</div>
+			<div class="thum">
+				<h3>이미지</h3>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+		document.querySelector("#search").onkeydown = function (key) {
+			if (key.keyCode == 13) {
+				document.querySelector("#bt").click();
+			}
+		};
+
+		var xhr = new XMLHttpRequest();
+
+		// load : 통신이 성공적으로 완료되면 발생하는 이벤트
+		xhr.addEventListener("load", ajaxTest);
+
+		var isEnd = false;
+		var pageNo = 1;
+		var totalPage = 0;
+		var size = 10;
+		var realEnd = false;
+		var title = "";
+
+		function newSearch() {
+			title = document.getElementById("search").value;
+			if (title == "") {
+				alert("검색어를 입력하세요");
+			} else {
+				pageNo = 1;
+				realEnd = false;
+				jsAjax(pageNo);
+			}
+
+		}
+
+		function jsAjax(pageNo) {
+
+			var url = "https://dapi.kakao.com/v3/search/book?query=" + title + "&page=" + pageNo + "&size=" + size;
+			// 시작줄
+			xhr.open("GET", encodeURI(url));
+
+			// 헤더설정
+			xhr.setRequestHeader("Authorization", "KakaoAK 04a4ff3be0ac0a724b4508b9c7ae2d07");
+
+			// 바디설정
+			xhr.send();
+		}
+
+
+
+
+
+		function ajaxTest() {
+			var res = xhr.response;
+
+			//JSON 문자열 -> Object : JSON.parse
+			//Object -> json문자열 : JSON.stringify
+
+			var dataObj = JSON.parse(res);
+			console.dir(dataObj);
+
+			totalPage = Math.floor(dataObj.meta.total_count / size);
+
+			isEnd = dataObj.meta.is_end;
+
+			if (dataObj.documents.length == 0) {
+				alert("검색결과가 없습니다.");
+			}
+			var copy = document.querySelector(".bookData").outerHTML;
+			if (pageNo == 1) {
+				dataObj.documents.forEach(function (v) {
+					document.querySelector(".wrapper").innerHTML += copy;
+					var lh = document.querySelector(".wrapper").lastChild;
+					lh.children[0].textContent = v.title;
+					lh.children[1].textContent = v.price;
+					lh.children[2].textContent = v.publisher;
+					lh.children[3].innerHTML = "<img src='" + v.thumbnail + "'>";
+				});
+			} else {
+				dataObj.documents.forEach(function (v) {
+					document.querySelector(".wrapper").innerHTML += copy;
+					var lh = document.querySelector(".wrapper").lastChild;
+					lh.children[0].textContent = v.title;
+					lh.children[1].textContent = v.price;
+					lh.children[2].textContent = v.publisher;
+					lh.children[3].innerHTML = "<img src='" + v.thumbnail + "'>";
+				});
+			}
+
+
+			if (dataObj.documents.length > 0 && isEnd) {
+				alert("마지막 페이지입니다.");
+				realEnd = true;
+			}
+		}
+
+
+		window.onscroll = function () {
+			var bodyHeight = document.querySelector("body").clientHeight;
+			if (document.querySelector(".wrapper").clientHeight <= bodyHeight) {
+				if (realEnd == false) {
+					jsAjax(++pageNo);
+				}
+
+			} else if (window.scrollY > document.querySelector(".wrapper").clientHeight - bodyHeight) {
+				if (realEnd == false) {
+					jsAjax(++pageNo);
+				}
+			}
+		}
+	</script>
+
+</body>
+
+</html>

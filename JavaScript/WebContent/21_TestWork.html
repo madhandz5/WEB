@@ -1,0 +1,106 @@
+<html>
+
+<head>
+	<style>
+		.picArea {
+			margin: 0 auto;
+			width: 400px;
+			height: 400px;
+			background-color: black;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.imageWrapper {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0px;
+			z-index: 0;
+		}
+
+		.pic1 {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			background-image: url("../Resources/Image/image01.jpg");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0;
+
+		}
+
+		.pic2 {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			background-image: url("../Resources/Image/image02.jpg");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0;
+		}
+
+		.pic3 {
+			position: absolute;
+			height: 100%;
+			width: 100%;
+			background-image: url("../Resources/Image/image03.jpg");
+			background-size: cover;
+			background-position: center;
+			background-repeat: no-repeat;
+			opacity: 0;
+		}
+	</style>
+	<title>21_TestWork</title>
+</head>
+
+<body>
+
+	<form id="select">
+		<input type="radio" name="select" value="1" id="one">
+		<label for="one">1번후보</label><br>
+		<input type="radio" name="select" value="2" id="two">
+		<label for="two">2번후보</label><br>
+		<input type="radio" name="select" value="3" id="three">
+		<label for="three">3번후보</label><br>
+	</form>
+	<button onclick="drawImg()">선택하기</button>
+	<button onclick="removeImg()">삭제하기</button>
+	<div class="picArea" id="picArea">
+		<div class="imgWrapper">
+			<div class="pic pic1" id="1"></div>
+			<div class="pic pic2" id="2"></div>
+			<div class="pic pic3" id="3"></div>
+		</div>
+	</div>
+
+	<script>
+
+		var idx = null;
+		var select = document.getElementsByName("select");
+
+		function drawImg() {
+			for (var i = 0; i < select.length; i++) {
+				if (select[i].checked) {
+					idx = select[i].value;
+				}
+			}
+			document.querySelectorAll(".pic").forEach(function (v) {
+				v.style.opacity = "0";
+			});
+			document.getElementById(idx).style.opacity = "1";
+		}
+
+		function removeImg() {
+			document.querySelectorAll(".pic").forEach(function (v) {
+				v.style.opacity = "0";
+			});
+		}
+
+	</script>
+
+</body>
+
+</html>

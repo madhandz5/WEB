@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+.wrapper {
+	position: relative;
+	border: 2px solid black;
+	width: 450px;
+	height: 380px;
+	border: 2px solid black;
+}
+
+.content {
+	text-align: center;
+}
+
+.item {
+	display: inline-block;
+	margin-top: 10px;
+	transform: rotate(10deg);
+	margin-top : 20px;
+	border: 1px solid lightgray;
+}
+
+.polaroid {
+	background: white;
+	padding: 20px;
+	padding-left: 1%;
+	padding-top: 1%;
+}
+
+.img {
+	max-width: 100%;
+	height: auto;
+}
+
+.caption {
+	font-size: 12px;
+	text-align: center;
+}

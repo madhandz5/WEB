@@ -1,0 +1,110 @@
+@charset "utf-8";
+body { padding: 50px 0;}
+.paging { text-align: center; font-size: 0; display: none;}
+.paging li { display:inline-block; vertical-align: middle;}
+.paging li a { display: block; width: 32px; height: 32px; line-height: 32px; color: #898786;}
+.paging li.on a,
+.paging li a:hover { color: #ff5a20; text-decoration: underline;}
+.paging li.first a,
+.paging li.prev a,
+.paging li.next a,
+.paging li.last a { overflow: hidden; margin: 0 2px; width: 30px; height: 30px; border:1px solid #ebeae9; color: transparent; background: no-repeat center; }
+.paging li.first a { background-image:url(../image/ico_paging_first.png);}
+.paging li.prev a { background-image:url(../image/ico_paging_prev.png);}
+.paging li.next a { background-image:url(../image/ico_paging_next.png);}
+.paging li.last a { background-image:url(../image/ico_paging_last.png);}
+.paging li.prev a { margin-right:23px;}
+.paging li.next a { margin-left:23px;}
+
+.wrapper {
+    text-align: center;
+    margin: 5px 5px 5px 5px;
+}
+
+#title{
+    font-weight: bolder;
+    font-size: 50px;
+    text-decoration: underline;
+}
+
+#contentstable {
+    display: none;
+}
+
+#searchType {
+    height: 38px;
+    font-size: 20px;
+}
+
+#sortType{
+    height: 38px;
+    font-size: 20px;
+}
+
+#searchKeyWord{
+    width: 300px;
+    font-size: 20px;
+}
+
+#searchKeyWord::placeholder{
+    text-align: center;
+    color: lightgrey;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+#searchBtn{
+    font-size: 20px;
+    width: 100px;
+    height: 38px;
+    border-radius: 40px / 40px;
+}
+
+#pageCnt{
+    float:right;
+    display: none;
+    transform: translateX(-150px);
+}
+
+table {
+    margin: auto;
+    height: 800px;
+    width: 950px;
+}
+
+thead>tr>td{
+    background-color: lightgrey;
+    color: black;
+    font-weight: bold;
+    font-size: 22px;
+    text-align: center;
+}
+
+.title,.authors{
+    text-align: left;
+    width: 300px;
+    overflow: hidden;
+}
+
+.url{
+    width: 150px;
+}
+
+img {
+    height: 100px;
+    width: 70px;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+#body>tr>td>a>button{
+    width: 100px;
+    height: 50px;
+    font-weight: bold;
+}
+
+#body>tr>td>a>button:hover{
+    background-color: grey;
+}

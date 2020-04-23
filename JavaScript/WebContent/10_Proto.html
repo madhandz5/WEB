@@ -1,0 +1,84 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: auto;
+			border: 1px solid black;
+			background-color: lightgrey;
+		}
+	</style>
+	<title>10_Proto</title>
+</head>
+
+<body>
+	<h3>프로토타입</h3>
+	<div id="area" class="area"></div>
+	<script type="text/javascript">
+
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+
+
+		function Student(name, html5, css) {
+
+			// 속성 정의
+			// 인스턴수 변수
+			this.name = name;
+			this.html5 = html5;
+			this.css = css;
+
+			// 클래스 변수
+			Student.prototype.className = "UClass";
+
+			this.getSum = function () {
+				return this.html5 + this.css;
+			}
+
+			this.getAvg = function () {
+				return this.getSum() / 2;
+			}
+
+			this.toString = function () {
+				return this.className + " " + this.name + " " + ", 총점 : " + this.getSum() + ", 평균 : " + this.getAvg();
+			}
+		}
+
+		var std01 = new Student("아이유", 100, 100);
+		var std02 = new Student("김경호", 80, 90);
+		var std03 = new Student("김고은", 80, 60);
+
+		$("#area", std01);
+		$("#area", std02);
+		$("#area", std03);
+
+		Student.prototype.className = "AClass";
+		$("#area", std01);
+		$("#area", std02);
+		$("#area", std03);
+
+
+		std02.__proto__.className = "ZClass";
+		$("#area", std01);
+		$("#area", std02);
+		$("#area", std03);
+
+		std01.className = "IClass";
+		$("#area", std01);
+		$("#area", std02);
+		$("#area", std03);
+
+		Student.prototype.className = "UClass";
+		$("#area", std01);
+		$("#area", std02);
+		$("#area", std03);
+
+	</script>
+</body>
+
+</html>

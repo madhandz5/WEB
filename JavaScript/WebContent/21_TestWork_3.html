@@ -1,0 +1,133 @@
+<html>
+
+<head>
+	<style>
+		.Wrapper {
+			height: 100px;
+			width: 800px;
+			position: relative;
+		}
+
+		.labelWrapper {
+			float: left;
+		}
+
+		.typeWrapper {
+			float: right;
+			transform: translateX(-530px);
+		}
+
+		#board {
+			position: relative;
+		}
+
+		#id {
+			width: 100px;
+		}
+
+		#pw {
+			width: 100px;
+		}
+
+		#addr {
+			width: 300px;
+		}
+
+		#tel {
+			width: 100px;
+		}
+
+		#del {
+			width: 100px;
+		}
+
+		tbody {
+			width: 100%;
+		}
+	</style>
+	<title>TestWork_3</title>
+</head>
+
+<body>
+
+	<div id="Wrapper" class="Wrapper">
+		<div class="labelWrapper">
+			<label>아이디 : </label><br>
+			<label>비밀번호 : </label><br>
+			<label>주소 : </label><br>
+			<label>전화번호 : </label><br>
+		</div>
+		<div class="typeWrapper" id="typeVals">
+			<input type="text" class="typeId"><br>
+			<input type="text" class="typepw"><br>
+			<input type="text" class="typeadd"><br>
+			<input type="text" class="typetel"><br>
+		</div>
+	</div>
+	<button onclick="addRow()">추가</button>
+	<button onclick="deleteAll()">삭제</button>
+	<table id="board" border="1">
+		<tr>
+			<thead>
+				<th id="id">아이디</th>
+				<th id="pw">비밀번호</th>
+				<th id="addr">주소</th>
+				<th id="tel">전화번호</th>
+				<th id="del">삭제</th>
+			</thead>
+		</tr>
+		<tbody>
+		</tbody>
+	</table>
+	<script>
+		var typeVals = document.getElementsByTagName("input");
+		var table_count = [];
+		var count = 0;
+		var cnt = 0;
+		table_count[0] = 0;
+
+		function addRow() {
+			count++;
+			cnt++;
+			table_count[cnt] = count;
+
+			var myTbody = document.getElementById("board");
+			var row = myTbody.insertRow(myTbody.rows.length);
+			for (var i = 0; i < typeVals.length; i++) {
+				row.insertCell(i).innerHTML = typeVals[i].value;
+			}
+			row.insertCell(typeVals.length).innerHTML += "<button onclick=deleteThis(" + table_count[cnt] + ")>삭제</button>"
+		}
+
+		function deleteThis(num) {
+			var tbody = document.getElementById("board").getElementsByTagName("tbody")[0];
+
+			for (var i = 1; i < table_count.length; i++) {
+				if (table_count[i] == num) {
+					tbody.deleteRow(i);
+					table_count[i] = 0;
+				}
+			}
+			for (var i = 1; i < table_count.length; i++) {
+				if (table_count[i] == 0) {
+					cnt = tbody.rows.length - 1;
+					for (j = i; j < table_count.length; j++)
+						table_count[j] = table_count[j + 1];
+				}
+			}
+		}
+
+		function deleteAll() {
+			var tbody = document.getElementById("board").getElementsByTagName("tbody")[0];
+			var del_cnt = tbody.rows.length;
+
+			for (var i = 1; i < del_cnt; i++) {
+				tbody.deleteRow(1);
+			}
+			cnt = 0;
+		}
+
+	</script>
+</body>
+
+</html>

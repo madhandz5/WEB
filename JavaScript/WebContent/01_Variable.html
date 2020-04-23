@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		.area1 {
+			border: 1px soild red;
+			height: 300px;
+		}
+	</style>
+	<title>01_Variable</title>
+</head>
+
+<body>
+	<h1>변수와 자료형</h1>
+	<h3>변수 선언</h3>
+	<pre>
+	전역변수와 지역변수가 존재한다.
+	
+	전역변수로 선언하기 : 함수 외부에서 var 변수명, 변수명
+	지역변수로 선언하기 : 함수 내부에서 var 변수명
+	전역변수와 지역변수가 동일한 이름일 경우 지역변수가 우선권
+	전역변수 선언 시 window 객체의 프로퍼티로 등록이 된다.
+	
+	객체의 프로퍼티 사용하기 : 객체명.프로퍼티명 으로 사용가능
+	
+	window.변수명 방식으로 이름이 같더라도 전역변수를 사용할 수 있다.
+	
+	
+	</pre>
+	<script type="text/javascript">
+		/*
+		scope : 함수레벨 스코프, 블록레벨 스코프
+		메모리에 올라간 변수가 GC에 의해 지워지는 범위 
+
+		var : 재선언, 재할당 가능, 함수레벨 스코프
+		let : 재선언 불가능, 재할당 가능, 블록레벨 스코프 // ECMA6부터 지원
+		const :  재선언, 재할당 불가능 (상수), 블록레벨 스코프 // ECMA6부터 지원
+		
+		*/
+
+		let lStr = 'let 전역변수';
+		var vStr = 'vsr 전역변수';
+		function variableTest() {
+			//지역변수
+			var vStr = 'var 지역변수';
+			let lStr = ' let 지역변수';
+			console.log('var 지역변수 출력하기 : ' + vStr);
+			console.log('var 전역변수 출력하기 : ' + window.vStr);
+
+			// 함수범위 스코프 보기
+			if (true) {
+				var ifVar = 'ifVar';
+				let ifLet = 'ifLet';
+				console.log('if문 안에서 ifVar 실행시 ' + ifVar);
+				console.log('if문 안에서 ifLet 실행시 ' + ifLet);
+			}
+			try {
+				console.log('if문 밖에서 ifVar 실행시 ' + ifVar);
+				console.log('if문 밖에서 ifLet 실행시 ' + ifLet);
+
+			} catch (e) {
+				console.log('if문이 닫히면서 ifLet메모리는 내려갔다.');
+			}
+
+			//what = '함수안에서 전역변수 만들기';
+		}
+
+		function outerScope() {
+			var what = 'outterScope';
+
+
+			function innerScope() {
+				what = 'innerScope';
+			}
+			console.log(what);
+			innerScope();
+			alert(what);
+		}
+
+		variableTest();
+		console.log(window.what);
+		outerScope();
+
+
+	</script>
+
+
+</body>
+
+</html>

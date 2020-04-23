@@ -1,0 +1,63 @@
+<html>
+
+<head>
+	<style>
+		.wrap * {
+			border: 1px solid lightgrey;
+			display: block;
+			padding: 5px;
+			margin: 15px;
+			color: grey;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>jquery05</title>
+</head>
+
+<body>
+	<h3>하위요소 선택하기</h3>
+	<p>선택된 요소의 하위 요소들을 선택할 수 있는 메서드</p>
+	<div class="wrap">
+		<div style="width: 500px;">
+			great-grandparent
+			<ul>ul(grand-parent)
+				<li>li(direct parent)
+					<span>span</span>
+				</li>
+			</ul>
+		</div>
+		<div style="width: 500px;">
+			grandparent
+			<p>p direct Parent
+				<span>span</span>
+			</p>
+		</div>
+	</div>
+	<script>
+		//선택된 요소의 모든 자손 객체를 리턴
+		$(function () {
+			$(".wrap").children().css({
+				"color": "red",
+				"border": "2px solid red"
+			});
+		});
+
+
+		$(function () {
+			$(".wrap").children().children().css({
+				"color": "blue",
+				"border": "2px solid blue"
+			});
+		});
+
+		$(function () {
+			$(".wrap").children().children('ul').css({
+				"color": "yellowgreen",
+				"border": "2px solid yellowgreen"
+			});
+		});
+
+	</script>
+</body>
+
+</html>

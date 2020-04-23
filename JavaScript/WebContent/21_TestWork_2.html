@@ -1,0 +1,126 @@
+<html>
+
+<head>
+	<style>
+		body {
+			background-color: white;
+			color: black;
+		}
+
+		.Wrapper {
+			margin: 0 auto;
+			height: 700px;
+			width: 700px;
+		}
+
+		.innerWrapper {
+			height: 80%;
+			width: 80%;
+			;
+		}
+
+		.innerWrapper #red {
+			border: 2px solid black;
+			height: 45%;
+			width: 45%;
+			display: inline-block;
+			;
+		}
+
+		.innerWrapper #yellow {
+			border: 2px solid black;
+			height: 45%;
+			width: 45%;
+			display: inline-block;
+			;
+		}
+
+		.innerWrapper #blue {
+			border: 2px solid black;
+			height: 45%;
+			width: 45%;
+			display: inline-block;
+			;
+		}
+
+		.innerWrapper #black {
+			border: 2px solid black;
+			height: 45%;
+			width: 45%;
+			display: inline-block;
+		}
+	</style>
+	<title>TestWork_2</title>
+</head>
+
+<body>
+	<div class="Wrapper">
+		<div class="innerWrapper">
+			<div class="inner" id="red">red</div>
+			<div class="inner" id="yellow">yellow</div>
+			<div class="inner" id="blue">blue</div>
+			<div class="inner" id="black">black</div>
+		</div>
+
+		<form id="selectForm">
+			<input type="checkbox" name="selectAll" value="all" id="all">
+			<label for="all">전체선택</label><br>
+			<input type="checkbox" name="select" value="red" id="red">
+			<label for="red">빨강</label><br>
+			<input type="checkbox" name="select" value="yellow" id="yellow">
+			<label for="yellow">노랑</label><br>
+			<input type="checkbox" name="select" value="blue" id="blue">
+			<label for="blue">파랑</label><br>
+			<input type="checkbox" name="select" value="black" id="black">
+			<label for="black">검정</label><br>
+		</form>
+		<button onclick="drawColor()">선택</button>
+		<button onclick="clearColor()">Clear</button>
+	</div>
+	<script>
+
+		var inner = document.getElementsByClassName("inner");
+		var valueArr = document.getElementsByName("select");
+		var checkFlag = document.getElementById("all").checked;
+
+		document.getElementById("all").addEventListener("click", function () {
+			checkFlag = document.getElementById("all").checked;
+			if (checkFlag) {
+				for (var i = 0; i < valueArr.length; i++) {
+					valueArr[i].checked = true;
+				}
+
+			} else {
+				for (var i = 0; i < valueArr.length; i++) {
+					valueArr[i].checked = false;
+				}
+			}
+		});
+
+		function drawColor() {
+			for (var i = 0; i < valueArr.length; i++) {
+				if (valueArr[i].checked) {
+					document.getElementById(valueArr[i].value).style.backgroundColor = valueArr[i].value;
+				}
+			}
+		}
+
+		function clearColor() {
+			for (var i = 0; i < inner.length; i++) {
+				inner[i].style.backgroundColor = "white";
+			}
+			this.resetCheckBox();
+		}
+
+		function resetCheckBox() {
+			for (var i = 0; i < valueArr.length; i++) {
+				if (valueArr[i].checked) {
+					valueArr[i].checked = false;
+				}
+			}
+			document.getElementById("all").checked = false;
+		}
+	</script>
+</body>
+
+</html>

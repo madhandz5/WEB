@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+div, span {
+	color: black;
+	border: 1px solid;
+	font-size: 1.2vw;
+	margin: 0;
+
+	/*  
+	margin : 요소와 요소간의 거리
+	padding : 요소의 외곽과 컨텐츠간의 거리
+	*/
+}
+
+h2 {
+	color: red;
+}
+
+.clear:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+</style>
+</head>
+<body>
+	<h2>block요소 위치 잡기 / transform</h2>
+	<div class="clear">
+		<div
+			style="height: 250px; width: 40%; float: left; background-color: red;">
+		</div>
+		<div
+			style="height: 250px; width: 40%; float: left; background-color: lightyellow; transform: translateX(50%);">
+
+			transform : translateX, translateY 요소를 X축 혹은 Y축으로 원하는 거리만큼 이동시킨다.<br>
+			상대크기인 %값을 입력할 경우 요소의 크기가 %만큼 이동하게 된다.<br>
+
+		</div>
+	</div>
+
+	<h2>block요소 위치 잡기 / transform</h2>
+
+	<div style="height: 250px; width: 45%; position: relative;">
+		<div
+			style="height: 50px; width: 40%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">테스트</div>
+	</div>
+
+
+</body>
+</html>

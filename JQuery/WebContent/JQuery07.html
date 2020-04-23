@@ -1,0 +1,84 @@
+<html>
+
+<head>
+	<style>
+		.wrap,
+		wrap * {
+			display: block;
+			border: 1px solid lightgrey;
+			color: lightgrey;
+			padding: 5px;
+			margin: 15px;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>jquery07</title>
+</head>
+
+<body>
+	<h3>sideaways 메서드</h3>
+	<div class="wrap">div(parent)
+		<p>p</p>
+		<span>span</span>
+		<h2>h2</h2>
+		<h3>h3</h3>
+		<p>p</p>
+	</div>
+	<script>
+		$(function () {
+			//선택된 요소와 같은 레벨에 있는 요소를 리턴
+			//매개변수가 있으면 매개변수와 일치하는 요소를 리턴
+
+			$("h2").siblings().css({
+				"color": "blue",
+				"border": "2px solid red"
+			});
+
+			$("h2").siblings("p").css({
+				"color": "red",
+				"border": "2px solid blue"
+			});
+
+			//선택된 요소와 같은 레벨에 있는 요소들 중에서 선택된 요소의 다음 한개의 요소 
+			$("h2").next().css({
+				"color": "lightblue",
+				"border": "2px solid yellowgreen"
+			});
+
+			//선택된 요소와 같은 레벨에 있는 요소들 중에서 선택된 요소 다음 모든 요소 
+			$("h2").nextAll().css({
+				"color": "lightblue",
+				"border": "2px solid yellowgreen"
+			});
+			//선택된 요소와 같은 레벨에 있는 요소들 중에서 선택된 요소 이전 한개의  요소 
+
+			$("h2").prev().css({
+				"color": "yellowgreen",
+				"border": "2px solid lightblue"
+			});
+			//선택된 요소와 같은 레벨에 있는 요소들 중에서 선택된 요소 이전 모든 요소 
+
+			$("h2").prevAll().css({
+				"color": "yellowgreen",
+				"border": "2px solid lightblue"
+			});
+
+			//선택된 요소와 같은 레벨의 요소 중에서 매개변수로 전달된 요소 이전의 요소를 리턴
+			$("h2").prevUntil("p").css({
+				"border": "dotted"
+			});
+
+			//선택된 요소와 같은 레벨의 요소 중에서 매개변수로 전달된 요소 이후의 요소를 리턴
+			$("h2").nextUntil("p").css({
+				"border": "dotted"
+			});
+
+
+
+		});
+
+
+	</script>
+</body>
+
+</html>

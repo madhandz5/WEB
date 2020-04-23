@@ -1,0 +1,66 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: auto;
+			border: 1px solid black;
+			background-color: lightgrey;
+		}
+
+		pre {
+			font-size: 1vw;
+		}
+	</style>
+	<title>13_Encapsulation</title>
+</head>
+
+<body>
+	<script>
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+	</script>
+	<h3>Encapsulation</h3>
+	<div id="area1" class="area"></div>
+	<script type="text/javascript">
+
+		function Person() {
+			// 함수 안에서 var를 사용해서 변수를 선언했기 때문에 지역변수가 되었다.
+			var name;
+			var gender;
+
+			this.setName = function (arg) {
+				name = arg;
+			}
+			this.getName = function () {
+				return name;
+			}
+
+			this.setGender = function (arg) {
+				gender = arg;
+			}
+
+			this.getGender = function () {
+				return gender;
+			}
+
+			this.toString = function () {
+				return "이름 : " + name + "<br>" + "성별 : " + gender;
+			}
+
+		}
+
+		var per01 = new Person();
+		per01.setName("오창영");
+		per01.setGender("남자");
+		$("#area1", per01);
+
+	</script>
+</body>
+
+</html>

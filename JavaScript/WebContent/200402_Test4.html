@@ -1,0 +1,52 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>title</title>
+</head>
+
+<body>
+	<!-- 요구사항을 반영하여 자바스크립트 버튼 이벤트 처리를 기술하시오. (10점)
+
+
+1. [원인] 영역에 다음의 내용을 구현하시오. (5점)
+
+- INLINE 방식으로 버튼이 클릭되었을 때, window.alert("클릭하였음"); 코드가 실행되게 한다.
+
+2. [조치내용] 영역에 다음의 내용을 자바스크립트로 구현하시오. (5점)
+
+- 전역 방식으로 버튼이 클릭되었을 때, testClicked() 함수가 실행되게 한다.
+
+- 실행된 함수 안의 코드는 window.alert("클릭하였음"); 작동되게 한다. -->
+
+	<!-- <button onclick="test0()">확인</button>
+	<script>
+		function test0() {
+			window.alert("클릭하였음");
+		}
+	</script> -->
+
+	<button id="btn1">확인</button>
+	<script>
+
+
+
+		document.getElementById("btn1").addEventListener("click", function () {
+			testClicked();
+		});
+
+		function testClicked() {
+			window.alert("클릭하였음");
+
+		}
+
+
+
+
+	</script>
+
+
+
+</body>
+
+</html>

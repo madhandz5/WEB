@@ -1,0 +1,144 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: 100px;
+			width: 80%;
+			border: 1px solid black;
+			background-color: lightgrey;
+		}
+
+		pre {
+			font-size: 1vw;
+		}
+	</style>
+	<title>09_This</title>
+</head>
+
+<body>
+
+	<script type="text/javascript">
+
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+	</script>
+	<h3>this : this 인자는 arguments 와 마찬가지로 함수가 실행될때 자동으로 넘어간다.</h3>
+	<pre>
+		1. 함수를 호출할 때 this 바인딩<br>
+		this = 전역객체 = window 객체 <br>
+	</pre>
+
+	<div class="area" id="area1"></div>
+	<script>
+		var who = "전역객체의 who입니다.";
+		function info() {
+			var who = "info함수의 who입니다.";
+			$("#area1", this.who);
+		}
+		info();
+	</script>
+
+	<pre>
+		2. 메서드를 호출할 때 this 바인딩<br>
+		this = 전역객체 = window 객체 <br>
+	</pre>
+
+	<div class="area" id="area2"></div>
+	<script type="text/javascript">
+		var methodWho = "전역객체의 학생입니다.";
+
+		var Uclass = {
+			methodWho: "Uclass 학생",
+			info: function () {
+				$("#area2", this.methodWho);
+				(function () {
+					$("#area2", this.methodWho);
+				})();
+			}
+		}
+		var Zclass = {
+			methodWho: "Zclass 학생",
+			info: Uclass.info
+		}
+
+		Uclass.info();
+		Zclass.info();
+	</script>
+	<pre>
+		3. 생성자 함수로 동작할 때 this 바인딩<br>
+		생성자 함수 코드가 실행되면 최 우선적으로 빈 객체를 하나 생성한다. <br>
+		그 다음 생성자 함수의 this를 빈 객체에 바인딩 한다.<br>
+		생성자 함수에 return 문이 없으면 this를 반환한다.<br>
+		return 문에 객체가 있으면 해당 객체를 반환한다.<br>
+		return 문에 기본타입이 있으면, 일반함수로 사용할때는 기본타입을, 생성자 함수로 사용할 때는 this를 반환한다.
+	</pre>
+
+	<div class="area" id="area3"></div>
+	<script>
+		var constructorWho = "전역 객체의 생성자 who";
+		function Info() {
+			this.info = function () {
+				$("#area3", this.who);
+			}
+
+			// return {
+			// 	info: $("#area3", "이 객체가 반환될 것이야")
+			// }
+
+			// return 100;
+		}
+
+		var Uclass = new Info();
+		Uclass.info();
+		Uclass.who = "Uclass 학생";
+		Uclass.info();
+		$("#area3", Info());
+	</script>
+	<pre>
+		4. 명시적 this 바인딩<br>
+		Function 생성자함수의 프로토타입 객체인 function의 call과 apply 메서드를 활용해서 this를 명시적으로 바인딩 할 수 있다.<br>
+	</pre>
+	<div id="area4" class="area"></div>
+	<script>
+		var Uclass = {
+			who: "Uclass학생",
+			age: 100,
+			info: function () {
+				$("#area4", this.who);
+			}
+		}
+
+		var Zclass = {
+			who: "Zclass학생",
+			age: 100,
+			info: function () {
+				$("#area4", this.who);
+			}
+		}
+
+		function changeWho(who, age) {
+			this.who = who;
+			this.age = age;
+			this.toString = "이름 : " + this.who + "나이 : " + this.age;
+		}
+
+		Uclass.info();
+		changeWho.apply(Uclass, ["Uclass의 이름이 바뀌었다.", 9999]);
+		Uclass.info();
+		$("#area4", Uclass.toString);
+		changeWho.call(Zclass, "Zclass의 이름이 바뀌었다.", 9999);
+		Zclass.info();
+		$("#area4", Zclass.toString);
+
+	</script>
+
+
+</body>
+
+</html>

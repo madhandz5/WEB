@@ -1,0 +1,58 @@
+<html>
+
+<head>
+	<style>
+		img,
+		#imgView {
+			width: 300px;
+			height: 300px;
+			background-color: black;
+		}
+	</style>
+	<title>Prac01</title>
+</head>
+
+<body>
+
+	<input type="radio" name="rdoBtn" value="image01.jpg">1번후보<br>
+	<input type="radio" name="rdoBtn" value="image02.jpg">2번후보<br>
+	<input type="radio" name="rdoBtn" value="image03.jpg">3번후보<br>
+	<button onclick="createImg()">이미지 생성하기</button>
+	<button onclick="deleteImg()">이미지 삭제하기</button>
+	<div id="imgView">
+	</div>
+	<script>
+		function createImg() {
+			var radios = document.querySelectorAll("input[type=radio]");
+			var radioVal = "";
+
+			radios.forEach(function (v, i) {
+				if (v.checked) {
+					radioVal = "../Resources/Image/" + v.value;
+				}
+
+			});
+
+			var img = document.createElement("img");
+			img.setAttribute("src", radioVal);
+
+			var div = document.querySelector("#imgView");
+
+			if (document.querySelector("#imgView>img")) {
+				document.querySelector("#imgView>img").remove();
+				div.appendChild(img);
+			} else {
+				div.appendChild(img);
+			}
+		}
+
+		function deleteImg() {
+			if (document.querySelector("#imgView>img")) {
+				document.querySelector("#imgView>img").remove();
+			}
+		}
+	</script>
+
+</body>
+
+</html>

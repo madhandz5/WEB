@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+<head>
+<meta charset="UTF-8">
+<title>css14_grid05</title>
+
+<style type="text/css">
+div, span {
+	color: black;
+	border: 1px solid;
+	font-size: 1.2vw;
+	margin: 0;
+
+	/*  
+	margin : 요소와 요소간의 거리
+	padding : 요소의 외곽과 컨텐츠간의 거리
+	*/
+}
+
+h2 {
+	color: red;
+}
+</style>
+</head>
+<body style="height: 100%;">
+
+	<div style="height: 250px; background-color: red;"></div>
+	<div
+		style="height: 250px; width: 8%; background-color: yellow; position: fixed; top: 47%; z-index: 100;"></div>
+	<div
+		style="height: 100%; background-color: lightblue; position: relative;">
+
+		<h2>block요소 위치 잡기 / z-index</h2>
+		<div
+			style="height: 100%; width: 20%; position: absolute; top: 50%; left: 50%; transform: translate(-70%, -50%); background-color: blue; z-index: 100;"></div>
+
+		<div
+			style="height: 200px; width: 20%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: red;"></div>
+
+	</div>
+</body>
+</html>

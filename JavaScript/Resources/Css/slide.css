@@ -1,0 +1,80 @@
+.slideWrapper {
+	position: relative;
+	width: 200%;
+	left: 25%;
+}
+
+.slideWrapper i {
+	position: absolute;
+	z-index: 999;
+	top: 50%;
+	transform: translateY("-50%");
+	cursor: pointer;
+}
+
+.slideWrapper .left {
+	left: 1%;
+	font-size: 2vw;
+	color: white;
+}
+
+.slideWrapper .right {
+	left: 23%;
+	font-size: 2vw;
+	color: white;
+}
+
+.slideBox {
+	position: relative;
+	width: 25%;
+	height: 300px;
+	/* overflow: hidden; */
+}
+
+.slideBox div {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+
+}
+
+.slideBox div:nth-child(1) {
+	background-image: url(../Image/jo.jpg);
+	background-size: contain;
+}
+
+.slideBox div:nth-child(2) {
+	background-image: url(../Image/IU.jpg);
+	background-size: contain;
+	left: 100%;
+}
+
+.slideBox div:nth-child(3) {
+	background-image: url(../Image/win.jpg);
+	background-size: contain;
+	left: 200%;
+}
+
+.slideBox div:nth-child(4) {
+	background-image: url(../Image/emma.jpg);
+	background-size: contain;
+	left: 300%;
+}
+
+.buttonDiv {
+	position: absolute;
+	top: 90%;
+	left: 12.5%;
+	transform: translateX(-50%);
+}
+
+.navButton {
+	width: 10px;
+	height: 10px;
+	background-color: white;
+	border-radius: 100%;
+}
+
+.buttonDiv #nb-00 {
+	background-color: red;
+}

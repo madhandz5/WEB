@@ -1,0 +1,170 @@
+<html>
+
+<head>
+	<title>Prac_Orderby</title>
+</head>
+
+<body>
+	<div class="bbs-list">
+		<!-- bbs-list -->
+
+		<table class="table-col core" cellspacing="0" border="1">
+			<!-- core -->
+			<colgroup>
+				<!-- 중요! 컬럼 갯수 만큼 col 입력, 너비 고정시 table 에 fixed 클래스 삽입 -->
+				<col style="width: auto;">
+				<col style="width: auto;">
+				<col style="width: auto;">
+				<col style="width: auto;">
+			</colgroup>
+			<thead>
+				<tr>
+					<th><span><a onclick="orderby('entName')" style="cursor:Pointer">번호</a></span></th>
+					<th><span><a onclick="orderby('entName')" style="cursor:Pointer">기업명 (ID)</a></span></th>
+					<th><span><a onclick="orderby('AllUnpay')" style="cursor:Pointer">총 미수금 </a></span></th>
+					<th><span><a onclick="orderby('CNT')" style="cursor:Pointer">미수 주문건수 </a></span></th>
+				</tr>
+			</thead>
+			<tbody id="unpaidList">
+				<tr name="Trow">
+					<td name="rowNo">1</td>
+					<td name="entName">홍길동</td>
+					<td name="AllUnpay">23,420</td>
+					<td name="CNT">1</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">2</td>
+					<td name="entName">임꺽정</td>
+					<td name="AllUnpay">1,002,720</td>
+					<td name="CNT">1</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">3</td>
+					<td name="entName">우렁각시</td>
+					<td name="AllUnpay">2,267,930</td>
+					<td name="CNT">3</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">4</td>
+					<td name="entName">우투리</td>
+					<td name="AllUnpay">90,390</td>
+					<td name="CNT">2</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">5</td>
+					<td name="entName">도깨비</td>
+					<td name="AllUnpay">896,770</td>
+					<td name="CNT">3</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">6</td>
+					<td name="entName">황진이</td>
+					<td name="AllUnpay">205,720</td>
+					<td name="CNT">5</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">7</td>
+					<td name="entName">논개</td>
+					<td name="AllUnpay">9,188,776</td>
+					<td name="CNT">25</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">8</td>
+					<td name="entName">플라타너스</td>
+					<td name="AllUnpay">1,008,020</td>
+					<td name="CNT">11</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">9</td>
+					<td name="entName">파</td>
+					<td name="AllUnpay">58,200</td>
+					<td name="CNT">2</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">10</td>
+					<td name="entName">라면</td>
+					<td name="AllUnpay">1,658,000</td>
+					<td name="CNT">24</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">11</td>
+					<td name="entName">울면</td>
+					<td name="AllUnpay">3,638,560</td>
+					<td name="CNT">17</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">12</td>
+					<td name="entName">김고은</td>
+					<td name="AllUnpay">6,098,983</td>
+					<td name="CNT">54</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">13</td>
+					<td name="entName">엠마왓슨</td>
+					<td name="AllUnpay">3,059,320</td>
+					<td name="CNT">24</td>
+				</tr>
+				<tr name="Trow">
+					<td name="rowNo">14</td>
+					<td name="entName">채지연</td>
+					<td name="AllUnpay">1,206,070</td>
+					<td name="CNT">1</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+		var dsc = false;
+		function orderby(name) {
+
+			var idx = 0;
+			var nameArr = [];
+			var dataName = document.querySelectorAll("td[name=" + name + "]");
+			dataName.forEach(function () {
+
+
+				var data = dataName[idx].innerText;
+
+				nameArr[idx] = { "number": idx, "data": data };
+				idx++;
+			});
+			if (!dsc) {
+				if (name == 'entName') {
+					nameArr.sort(function (left, right) {
+						return left["data"] > right["data"] ? 1 : left["data"] < right["data"] ? -1 : 0;
+					});
+				} else {
+					nameArr.sort(function (left, right) {
+						return left["data"] > right["data"] ? -1 : left["data"] < right["data"] ? 1 : 0;
+					});
+				}
+				dsc = true;
+			} else {
+				if (name == 'entName') {
+					nameArr.sort(function (left, right) {
+						return left["data"] > right["data"] ? -1 : left["data"] < right["data"] ? 1 : 0;
+					});
+				} else {
+					nameArr.sort(function (left, right) {
+						return left["data"] > right["data"] ? 1 : left["data"] < right["data"] ? -1 : 0;
+					});
+				}
+				dsc = false;
+			}
+			var idx2 = 0;
+			var resultArr = [];
+			var trow = document.querySelectorAll("tr[name=Trow]");
+			var top = document.querySelector("#unpaidList");
+			top.innerHTML = "";
+			trow.forEach(function () {
+				resultArr[idx2] = trow[nameArr[idx2].number];
+				top.append(resultArr[idx2++]);
+			});
+		}
+	</script>
+
+
+</body>
+
+</html>

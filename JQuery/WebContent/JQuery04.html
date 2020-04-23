@@ -1,0 +1,91 @@
+<html>
+
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>jquery04</title>
+</head>
+
+<body>
+	<h3>:nth-child()필터선택자</h3>
+	<table border="1">
+		<tr>
+			<th>이름</th>
+			<th>혈액형</th>
+			<th>성별</th>
+		</tr>
+		<tr>
+			<td>김경호</td>
+			<td>A형</td>
+			<td>남</td>
+		</tr>
+		<tr>
+			<td>김찬영</td>
+			<td>A형</td>
+			<td>남</td>
+		</tr>
+		<tr>
+			<td>김하진</td>
+			<td>O형</td>
+			<td>여</td>
+		</tr>
+		<tr>
+			<td>김경호</td>
+			<td>A형</td>
+			<td>남</td>
+		</tr>
+		<tr>
+			<td>김찬영</td>
+			<td>A형</td>
+			<td>남</td>
+		</tr>
+		<tr>
+			<td>김하진</td>
+			<td>O형</td>
+			<td>여</td>
+		</tr>
+		<tr>
+			<td>김경호</td>
+			<td>A형</td>
+			<td>남</td>
+		</tr>
+		<tr>
+			<td>김찬영</td>
+			<td>A형</td>
+			<td>남</td>
+		</tr>
+		<tr>
+			<td>김하진</td>
+			<td>O형</td>
+			<td>여</td>
+		</tr>
+
+	</table>
+	<script>
+		$(function () {
+			//n번째 위치하는 객체선택
+			$("tr:eq(0)").css({
+				"background": "black",
+				"color": "white"
+			});
+
+			//수열번째 위치하는 태그선택
+			$("tr:nth-child(2n)").css("background", "yellowgreen");
+			$("td:nth-child(3n)").css("background", "orangered");
+
+			//n번째를 초과하는 객체 선택
+			$("tr:gt(6)").css("background", "lightgreen");
+
+			//n번째 미만에 위치하는 객체 선택
+			$("tr:lt(7)").css("font-size", "20px");
+
+			//특정 문자열을 포함하는 객체 선택
+			$("td:contains('A형')").css("color", "red");
+
+			//선택자와 일치하지 않는 객체 선
+			$("td:not(:contains('A형'))").css("color", "yellow");
+
+		});
+	</script>
+</body>
+
+</html>

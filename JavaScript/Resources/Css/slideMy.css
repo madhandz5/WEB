@@ -1,0 +1,127 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	background-color: black;
+}
+
+.main-banner {
+	margin: 0 auto;
+	width: 1200px;
+	height: 400px;
+	background-color: black;
+	overflow: hidden;
+	position: relative;
+}
+
+.main-banner .imgWrapper {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	z-index: 0;
+}
+
+.main-banner .imgWrapper .imgban {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0px;
+	transition-duration: 1000ms;
+}
+
+
+.main-banner #imgban0 {
+	background-image: url(../Image/IU.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.main-banner #imgban1 {
+	background-image: url(../Image/jo.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.main-banner #imgban2 {
+	background-image: url(../Image/emma.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.main-banner #imgban3 {
+	background-image: url(../Image/win.jpg);
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+.main-banner .btnWrapper {
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+}
+
+.btnWrapper .prev {
+	position: absolute;
+	left: 2%;
+	top: 35%;
+	font-size: 100px;
+	color: white;
+	z-index: 9999;
+	cursor: pointer;
+}
+
+.btnWrapper .prev {
+	position: absolute;
+	left: 0.2%;
+	top: 35%;
+	font-size: 100px;
+	color: white;
+	z-index: 9999;
+	cursor: pointer;
+}
+
+.btnWrapper .prev :hover {
+	background-color: red;
+	color: red;
+	z-index: 9999;
+}
+
+
+.btnWrapper .next {
+	position: absolute;
+	right: 0.2%;
+	top: 35%;
+	font-size: 100px;
+	color: white;
+	z-index: 9999;
+	cursor: pointer;
+}
+
+.btnWrapper .next :hover {
+	background-color: red;
+	color: red;
+	z-index: 9999;
+}
+
+.navbtnDiv {
+	position: absolute;
+	top: 90%;
+	left: 45%;
+	z-index: 999999;
+}
+
+.navbtn {
+	width: 20px;
+	height: 20px;
+	background-color: grey;
+	border-radius: 100%;
+	z-index: 999999;
+	cursor: pointer;
+}

@@ -1,0 +1,85 @@
+<html>
+
+<head>
+	<style>
+		span {
+			display: inline-block;
+			width: 100px;
+		}
+	</style>
+	<title>Prac03</title>
+</head>
+
+<body>
+	<span>아이디 : </span><input type="text" id="id"><br>
+	<span>비밀번호 : </span><input type="text" id="pw"><br>
+	<span>주소 : </span><input type="text" id="addr"><br>
+	<span>전화번호 : </span><input type="text" id="phone"><br>
+
+	<button onclick="tableVal()">추가</button>
+	<button onclick="delVal()">삭제</button>
+
+	<div id="addTable">
+		<table border="1" id="ctb">
+			<col width="100px">
+			<col width="100px">
+			<col width="300px">
+			<col width="100px">
+			<col width="100px">
+			<thead>
+				<tr>
+					<th>아이디</th>
+					<th>비밀번호</th>
+					<th>주소</th>
+					<th>전화번호</th>
+					<th>삭제</th>
+				</tr>
+			</thead>
+			<tbody id="addtr">
+
+			</tbody>
+		</table>
+	</div>
+
+	<script>
+		function $(selector, ln) {
+			if (arguments.length >= 2) {
+				return document.querySelectorAll(selector);
+			} else {
+				return document.querySelector(selector);
+			}
+		}
+		function createRow(vals) {
+			var tr = document.createElement("tr");
+
+			vals.forEach(function (v) {
+				var td = document.createElement("td");
+				td.textContent = v.value;
+				tr.appendChild(td);
+			});
+
+			var dtd = document.createElement("td");
+			dtd.innerHTML = "<button onclick='delRow(this)'>삭제</button>"
+			tr.appendChild(dtd);
+
+			return tr;
+		}
+
+		function tableVal() {
+			var vals = $("input[type=text]", 1);
+			$("#addtr").appendChild(createRow(vals));
+		}
+		function delRow(ele) {
+			var delTr = ele.parentElement.parentElement;
+			$("#addtr").removeChild(delTr);
+		}
+
+		function delVal() {
+			$("#addtr").innerHTML = "";
+		}
+
+
+	</script>
+</body>
+
+</html>

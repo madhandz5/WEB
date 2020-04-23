@@ -1,0 +1,135 @@
+<html>
+
+<head>
+	<style>
+		.div-test {
+			border: 1px solid black;
+			padding: 20px;
+		}
+
+		.div1 {
+			background-color: red;
+		}
+
+		.div2 {
+			background-color: orange;
+		}
+
+		.div3 {
+			background-color: yellow;
+		}
+
+		.div4 {
+			background-color: green;
+		}
+	</style>
+	<title>18_Event2</title>
+</head>
+
+<body>
+	<script>
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+		function $all(id) {
+			return document.querySelectorAll(id);
+		}
+	</script>
+	<h1>이벤트 전파</h1>
+	<h3>이벤트 버블링</h3>
+	<p> 자식노드와 부모노드에 동일한 이벤트가 등록되어 있다면<br>
+		자식노드에서 부모노드로 이벤트가 전파된다.</p>
+	<div onclick="eventBubble(this)" class="div-test div1" id="bubble1">
+		<div onclick="eventBubble(this)" class="div-test div2" id="bubble2">
+			<div onclick="eventBubble(this)" class="div-test div3" id="bubble3">
+				<div onclick="eventBubble(this)" class="div-test div4" id="bubble4">
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		var colArr = ["lightblue", "blue", "lightyellow", "yellow"];
+		var count = 0;
+		function eventBubble(e) {
+			setTimeout(function () {
+				e.style.backgroundColor = colArr[-4 + count++];
+			}, 300 * count++);
+		}
+	</script>
+	<hr>
+	<h3>이벤트 캡쳐</h3>
+	<pre>
+		부모노드에서 자식노드로 이벤트가 전파된다.
+	</pre>
+	<div class="div-test div1 cap" id="capture4">
+		<div class="div-test div2 cap" id="capture3">
+			<div class="div-test div3 cap" id="capture2">
+				<div class="div-test div4 cap" id="capture1">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		/*
+			이벤트 캡쳐	
+		*/
+		var count2 = 0;
+		$all(".cap").forEach(
+			function (v) {
+				v.addEventListener("click", function () {
+					setTimeout(function () {
+						v.style.backgroundColor = colArr[4 - count2--];
+					}, 300 * count2++);
+				}, true);
+			}
+		);
+	</script>
+	<hr>
+	<h3>이벤트 버블링 막기</h3>
+	<div onclick="test3(this,'1번 div')" class="div-test div1">
+		<div onclick="test3(this,'2번 div')" class="div-test div2">
+			<div onclick="blockTest(event,'3번 div')" class="div-test div3" id="div3">
+				<div onclick="test3(this,'4번 div')" class="div-test div4" id="div4">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function blockTest(e, msg) {
+			alert(msg);
+			/*  
+				ie 제외
+				상위로의 전파를 막는다.
+				단 div3요소의 다른 이벤트는 못 막는다.
+			*/
+			//e.stopPropagation();
+			/*
+				상위로의 전파를 막는다.
+				div3요소의 다른 이벤트도 막는다.
+			*/
+			e.stopImmediatePropagation();
+
+			/* 
+				 ie 전용
+				 event.cancelBubble = true;
+			*/
+		}
+		function test3(e) {
+			e.style.backgroundColor = colArr[count++];
+		}
+
+		$eventListener("#div3", function () {
+			window.alert("이것도 막아보시지!");
+		});
+
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+#fullWrapper {
+	position: relative;
+	width: 1024px;
+	height: 768px;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+}
+
+#subject {
+	width: 100%;
+	height: 10%;
+	font-size: 40px;
+	color: black;
+	border-bottom: solid 1px black;
+}
+
+#divWrapper {
+	height: 100%;
+	width: 96%;
+	margin-left: 2%;
+	transform: translateY(-4%);
+}
+
+#header {
+	background-color: orangered;
+	width: 100%;
+	height: 15%;
+}
+
+#nav {
+	background-color: grey;
+	width: 100%;
+	height: 8%;
+}
+
+#bodyWrapper {
+	height: 100%;
+	width: 100%;
+}
+
+#section {
+	background-color: yellowgreen;
+	width: 80%;
+	height: 100%;
+	overflow: hidden;
+}
+
+#left {
+	position: relative;
+	height: 89%;
+	width: 48%;
+	margin-left: 2%;
+	background-color: violet;
+	transform: translateY(3%);
+}
+
+#right {
+	position: relative;
+	float: right;
+	height: 89%;
+	width: 48%;
+	margin-right: 2%;
+	background-color: orange;
+	transform: translateY(-97%);
+}
+
+#aside {
+	float: right;
+	width: 20%;
+	height: 100%;
+	transform: translateY(-100%);
+	background-color: blue;
+}
+
+#footer {
+	background-color: purple;
+	height: 10%;
+}

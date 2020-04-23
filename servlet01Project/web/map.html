@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>커스텀 오버레이 생성하기1</title>
+    <style>
+        .div {
+            margin-bottom: 96px;
+            background-color: lightgrey;
+        }
+
+        .div * {
+            display: inline-block;
+            vertical-align: top;
+            background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;
+        }
+
+        .div .left {
+            background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_l.png") no-repeat;
+            display: inline-block;
+            height: 150px;
+            overflow: hidden;
+            vertical-align: top;
+            width: 7px;
+        }
+
+        .div .center {
+            background: rgb(92, 8, 8) repeat-x;
+            display: inline-block;
+            height: 300px;
+            font-size: 12px;
+            line-height: 300px;
+        }
+
+        .div .right {
+            background: url("https://t1.daumcdn.net/localimg/localimages/07/2011/map/storeview/tip_r.png") -1px 0 no-repeat;
+            display: inline-block;
+            height: 150px;
+            overflow: hidden;
+            width: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map" style="width:100%;height:500px"></div>
+    <script type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=562211a3a3e04be00c502b7fd9d47a11"></script>
+    <script>
+        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+            mapOption = {
+                center: new kakao.maps.LatLng(37.4779131, 126.6352365), // 지도의 중심좌표
+                level: 3 // 지도의 확대 레벨
+            };
+
+        var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+        // 커스텀 오버레이에 표시할 내용입니다     
+        // HTML 문자열 또는 Dom Element 입니다 
+        var data = [
+            {
+                "시장명": "대정오일시장",
+                "시장유형": "5일장",
+                "소재지도로명주소": "제주특별자치도 서귀포시 대정읍 하모리 1089-15",
+                "소재지지번주소": "제주특별자치도 서귀포시 대정읍 하설리 1089-15번지",
+                "시장개설주기": "5일장",
+                "위도": "33.2204449",
+                "경도": "126.2484184",
+                "점포수": "52",
+                "취급품목": "농산물+축산물+수산물+의류및신발+가정용품+음식점업+기타소매업 등",
+                "사용가능상품권": "온누리상품권",
+                "홈페이지주소": "-",
+                "공중화장실보유여부": "Y",
+                "주차장보유여부": "Y",
+                "개설년도": "2009",
+                "전화번호": "",
+                "데이터기준일자": "2019-04-04"
+            },
+            {
+                "시장명": "서귀포매일올레시장",
+                "시장유형": "상설장",
+                "소재지도로명주소": "제주특별자치도 서귀포시 서귀동 277-1",
+                "소재지지번주소": "제주특별자치도 서귀포시 서귀동 277-1번지",
+                "시장개설주기": "상설장",
+                "위도": "33.2501803",
+                "경도": "126.5636711",
+                "점포수": "35",
+                "취급품목": "농산물+수산물+음식점업 등",
+                "사용가능상품권": "온누리상품권",
+                "홈페이지주소": "sgp.market.jeju.kr",
+                "공중화장실보유여부": "Y",
+                "주차장보유여부": "Y",
+                "개설년도": "2010",
+                "전화번호": "064-762-1949",
+                "데이터기준일자": "2019-04-04"
+            },
+            {
+                "시장명": "노화장실",
+                "시장유형": "상설장",
+                "소재지도로명주소": "제주특별자치도 서귀포시 서귀동 277-1",
+                "소재지지번주소": "제주특별자치도 서귀포시 서귀동 277-1번지",
+                "시장개설주기": "상설장",
+                "위도": "33.2501803",
+                "경도": "126.5636711",
+                "점포수": "35",
+                "취급품목": "농산물+수산물+음식점업 등",
+                "사용가능상품권": "온누리상품권",
+                "홈페이지주소": "sgp.market.jeju.kr",
+                "공중화장실보유여부": "Y",
+                "주차장보유여부": "N",
+                "개설년도": "2014",
+                "전화번호": "064-762-1949",
+                "데이터기준일자": "2019-04-04"
+            }];
+
+            var openYear = "2009";
+            var formoon = parseInt(openYear);
+            var openInt = parseInt(data[0].개설년도);
+
+            console.log(formoon);
+            console.log(openInt);
+            console.log(data[0].개설년도);
+
+
+            for(var i = 0; i < data.length; i++){
+                if(data[i].공중화장실보유여부 == "Y" && data[i].주차장보유여부 =="Y"){
+                    console.log("화장실과 주차장 있어요" + data[i].시장명);
+                }else{
+                    console.log("화장실또는 주차장 없어요" + data[i].시장명);
+                }
+            }
+
+            for(var i = 0; i < data.length; i++){
+                if(data[i].개설년도 >= openYear){
+                    console.log(openYear + " 년이후 "+data[i].시장명);
+                }        
+            }
+
+            
+
+
+
+
+
+        var content1 = "시장명 : 현대시장!<br>시장 개설주기 : 상설장<br>점포수 : 76<br>";
+        var content = "<div class ='div'>" + content1 + "</div>";
+
+        // 커스텀 오버레이가 표시될 위치입니다 
+        var position = new kakao.maps.LatLng(37.4779131, 126.6352365);
+
+        // 커스텀 오버레이를 생성합니다
+        var customOverlay = new kakao.maps.CustomOverlay({
+            position: position,
+            content: content
+        });
+
+        // 커스텀 오버레이를 지도에 표시합니다
+        customOverlay.setMap(map);
+    </script>
+</body>
+
+</html>

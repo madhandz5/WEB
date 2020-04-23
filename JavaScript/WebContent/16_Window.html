@@ -1,0 +1,163 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: auto;
+			border: 1px solid red;
+			background-color: lightgrey;
+		}
+
+		.area-big {
+			height: 400px;
+			border: 1px solid red;
+			background-color: lightgrey;
+		}
+
+		pre {
+			font-size: 1vw;
+		}
+	</style>
+	<title>16_Window</title>
+</head>
+
+<body>
+	<script>
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+	</script>
+	<h1>window 객체</h1>
+	<pre>
+		window객체는 자바스크립트의 전역객체로 BOM과 DOM으로 나뉜다.<br>
+		BOM : 브라우저 관련된 객체 (location객체, navigator객체, history객체, screen객체)<br>
+		DOM : HTML과 관련된 객체 (document객체)<br>
+	</pre>
+	<h3>윈도우 객체</h3>
+	<pre>
+		브라우저 창에 대한 설정을 하는 객체
+	</pre>
+	<button onclick="test01()">네이버</button>
+	<button onclick="test02()">다음</button>
+	<script>
+		//window.open("주소","이름 또는 형태","창의 형태");
+		function test01() {
+			window.open("http://www.naver.com", " ", "width=500,height=600", false);
+		}
+		function test02() {
+			window.open("http://www.daum.net", "", "width=500,height=600", false);
+		}
+	</script>
+	<h3>window객체의 timer 메서드</h3>
+	<h4>setTimeout()</h4>
+	<button onclick="test03()">확인하기</button>
+	<script>
+		function test03() {
+			window.alert("3초뒤에 닫힙니다.");
+			var myWindow = window.open();
+			window.setTimeout(function () {
+				myWindow.close();
+			}, 3000);
+		}
+	</script>
+	<h4>setInterval()</h4>
+	<button id="intervalBtn" onclick="test04()">시간표시하기</button>
+	<div id="area1" class="area"></div>
+	<script>
+		var intervalID;
+
+		function test04() {
+			window.alert("현재 시간을 표시합니다.");
+			intervalID = window.setInterval(function () {
+				var date = new Date();
+				$("#area1", date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+			}, 1000);
+			return intervalID;
+		}
+	</script>
+	<h4>clearInterval()</h4>
+	<button id="stopTimer" onclick="stopTimer()">시간정지하기</button>
+	<button onclick="test05()">확인하기</button>
+	<div id="area2" class="area"></div>
+	<script>
+		function stopTimer() {
+			window.alert("3초뒤 이 시계를 멈춥니다.");
+			window.setTimeout(function () {
+				window.clearInterval(intervalID);
+			}, 3000);
+		}
+
+		function test05() {
+			var count = 10;
+			var timer = window.setInterval(function () {
+				$("#area2", count--);
+			}, 1000);
+			setTimeout(function () {
+				clearInterval(timer);
+				$("#area2", "종료")
+			}
+				, 11000);
+		}
+	</script>
+	<h3>screen 객체</h3>
+	<pre>운영체제 화면의 속성을 가지는 객체이다.</pre>
+	<button onclick="test06()">확인하기</button>
+	<div id="area3" class="area"></div>
+	<script>
+		function test06() {
+			$("#area3", "화면 높이 너비");
+			$("#area3", screen.height);
+			$("#area3", screen.width);
+
+			$("#area3", "실제 화면에서 사용가능한 높이 너비");
+			$("#area3", screen.availHeight);
+			$("#area3", screen.availWidth);
+		}
+	</script>
+	<h3>location 객체</h3>
+	<pre>
+		브라우저 주소 표시줄과 관련된 객체
+	</pre>
+	<button onclick="test07()">확인하기</button>
+	<button onclick="location='http://www.naver.com'">네이버로 이동</button>
+	<button onclick="test08()">페이지 새로고침</button>
+	<button onclick="test09()">구글로 이동</button>
+	<button onclick="test10()">구글로 이동 뒤로가기X</button>
+	<div id="area4" class="area"></div>
+	<script>
+		function test07() {
+			for (var key in window.location) {
+				$("#area4", key + " : " + window.location[key]);
+			}
+		}
+		function test08() {
+			location = location;
+		}
+
+		function test09() {
+			// location = "http://google.com";
+			location.assign("http://www.google.com");
+		}
+
+		function test10() {
+			location.replace("http://www.google.com");
+		}
+	</script>
+	<h3>navigator</h3>
+	<pre>웹페이지를 실행하고 있는 브라우저에 대한 정보를 가지고 있는 객체</pre>
+	<button onclick="test11()">확인하기</button>
+	<div id="area5" class="area"></div>
+	<script>
+		function test11() {
+			for (var key in window.navigator) {
+				$("#area5", key + " : " + window.navigator[key]);
+			}
+		}
+	</script>
+</body>
+
+</html>

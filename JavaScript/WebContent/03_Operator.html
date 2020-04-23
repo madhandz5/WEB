@@ -1,0 +1,138 @@
+<html>
+
+<head>
+	<title>변수와 자료형</title>
+	<style>
+		.area1 {
+			border: 1px solid red;
+			height: 250px;
+		}
+
+		.area2 {
+			border: 1px solid red;
+			height: 150px;
+		}
+	</style>
+	<title>Operator</title>
+</head>
+
+<body>
+	<h1>연산자</h1>
+	<h3>문자열과 숫자의 '+' 연산</h3>
+	<p>문자열 + 숫자 = 문자열이 된다.<br>
+		숫자 + 숫자 + 문자열 = 숫자연산이후 뒤의 문자열과 합쳐진다.
+	</p>
+	<button onclick="testPlus();">문자열과 숫자의 연산</button>
+	<br><br>
+	<div id="area1" class="area1"></div>
+	<script type="text/javascript">
+
+		function testPlus() {
+			var test1 = 7 + 7 + "7";
+			var test2 = 7 + "7" + 7;
+			var test3 = "7" + 7 + 7;
+			var test4 = "7" + (7 + 7);
+
+			$("area1", test1);
+			$("area1", test2);
+			$("area1", test3);
+			$("area1", test4);
+		}
+
+		function $(id, value) {
+			document.getElementById(id).innerHTML += value + "<br>";
+		}
+	</script>
+
+	<h3>== / ===</h3>
+	<button onclick="showOperator();">== / ===</button>
+	<div id="area2" class="area1"></div>
+	<script type="text/javascript">
+
+		function showOperator() {
+
+			var num = 0;
+			var str = "0";
+			var undefinedVar;
+
+			/* 
+			
+			== / ===
+			== : 타입을 비교하지 않는다. 값만 비교한다.
+			=== : 타입과 값을 모두 비교한다.
+			
+			*/
+			if (num == str) {
+
+				$("area2", "동등연산자는 값이 일치하는지만 비교한다. 타입은 스크립트가 비교한다.");
+			}
+			if (num !== str) {
+				$("area2", "일치연산자는 값과 타입을 모두 비교한다.")
+			}
+
+			/* 
+			자바스크립트에 있는 값들은 boolean 값으로 변경이 가능하다.
+			1. false
+			2. 0
+			3. null
+			4. undefined
+			5. ""
+			6. NaN
+
+			이 경우를 제외하면 모두 true로 반환이된다.
+			*/
+
+			if (!(num || false || undefinedVar || null || "" || NaN)) {
+				$("area2", "num || false || undefinedVar || null || \"\" || NaN");
+			}
+		}
+	</script>
+	<h3>강제 형 변환</h3>
+	<p>
+		Number(), parseInt(),parseFloat()</p>
+	<button onclick="castingTest();">강제 형 변환</button>
+	<div class="area1" id="area3"></div>
+	<script type="text/javascript">
+		function castingTest() {
+			var num1 = 2;
+			var num2 = "3.8";
+			var numStr = "3.8$";
+
+			console.log(num1 + num2);
+			console.log(num1 + Number(num2));
+			console.log(num1 + Number(numStr));
+			console.log(num1 + parseInt(numStr));
+			console.log(num1 + parseFloat(numStr));
+
+			$("area3", num1 + num2);
+			$("area3", num1 + Number(num2));
+			$("area3", num1 + Number(numStr));
+			$("area3", num1 + parseInt(numStr));
+			$("area3", num1 + parseFloat(numStr));
+		}
+	</script>
+
+
+	<h3>infinity 와 NaN</h3>
+	<p>자바 스크립트에서는 0으로 숫자를 나누면 infinity라는 값을 넣어준다.
+		자바 스크립트에서는 표현할 수 없는 숫자를 NaN(Not a Number)로 표시해준다.
+	</p>
+	<button onclick="test3()">실행확인</button>
+	<div class="area1" id="area4"></div>
+	<script type="text/javascript">
+
+		function test3() {
+			var num1 = 10 / 0;
+			var num2 = 10 / 'a';
+
+			$("area4", num1);
+			$("area4", num2);
+
+		}
+
+	</script>
+
+
+</body>
+
+</html>

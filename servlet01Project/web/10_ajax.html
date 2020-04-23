@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>title</title>
+	<meta charset="UTF-8">
+	<style>
+		label {
+			display: inline-block;
+			width: 100px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="wrapper">
+		<h1>AJAX 테스트</h1>
+		<form action="ajax" method="post" id="ajaxTest">
+			<label>아이디 : </label><input type="text" name="id" id="id"><br>
+			<label>비밀번호 : </label><input type="password" name="password" id="password"><br>
+			<label>휴대폰번호 : </label><input type="text" name="tel" id="tel"><br>
+			<button type="submit">전송</button>
+		</form>
+		<button type="button" onclick="jsAjax()">jsAjax</button>
+		<button type="button" onclick="jqAjax()">jqAjax</button>
+	</div>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+	<script>
+		var xhr = new XMLHttpRequest();
+
+		// load : 통신이 성공적으로 완료되면 발생하는 이벤트
+		xhr.addEventListener("load", ajaxTest);
+
+		function jsAjax() {
+
+			var id = document.getElementById("id").value;
+			var password = document.getElementById("password").value;
+			var tel = document.getElementById("tel").value;
+
+			var body = "id=" + id + "&password=" + password + "&tel=" + tel;
+
+			// 시작줄
+			xhr.open("GET", "https://dapi.kakao.com/v3/search/book?query=비행운");
+
+			// 헤더설정
+			xhr.setRequestHeader("Authorization", "KakaoAK 04a4ff3be0ac0a724b4508b9c7ae2d07");
+
+			// 바디설정
+			xhr.send();
+		}
+
+		function ajaxTest() {
+			var res = xhr.response;
+			console.dir(res);
+			document.querySelector(".wrapper").innerHTML += res;
+		}
+
+		function jqAjax() {
+			$.ajax({
+				// 시작줄
+				url: "ajax",
+
+				// 바디
+				data: $("#ajaxTest").serialize(),
+
+				// 통신성공
+				success: function (data) {
+					document.querySelector(".wrapper").innerHTML += data;
+				}
+
+			});
+
+
+		}
+
+	</script>
+</body>
+
+</html>

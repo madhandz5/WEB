@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		.area1 {
+			border: 1px solid red;
+			height: 250px;
+		}
+	</style>
+	<title>04_Statment</title>
+</head>
+
+<body>
+
+	<h1>자바스크립트의 문법</h1>
+
+	<h3>1. if </h3>
+	<label>if : </label> <input type="text" id="if">
+	<button onclick="testIf()">확인하기</button>
+	<p id="ifTest"></p>
+	<h3>2. switch </h3>
+	<label>switch : </label> <input type="text" id="switch">
+	<button onclick="testSwitch()">확인하기</button>
+	<p id="switchTest"></p>
+	<h3>3. while </h3>
+	<label>while : </label> <input type="text" id="while">
+	<button onclick="testWhile()">확인하기</button>
+	<p id="whileTest"></p>
+	<h3>4. for </h3>
+	<label>for : </label> <input type="text" id="for">
+	<button onclick="testFor()">확인하기</button>
+	<p id="forTest"></p>
+	<h3>5. for-each </h3>
+	<label>for-each : </label> <input type="text" id="forEach">
+	<button onclick="testForEach()">확인하기</button>
+	<p id="forEachTest"></p>
+
+
+
+	<script type="text/javascript">
+
+		function testIf() {
+			if (document.querySelector("#if").value == 1) {
+				document.querySelector("#ifTest").innerHTML += "IF문 테스트 : 1<br>";
+			} else if (document.querySelector("#if").value == 2) {
+				document.querySelector("#ifTest").innerHTML += "IF문 테스트 : 2<br>";
+			} else {
+				document.querySelector("#ifTest").innerHTML += "IF문 테스트 : 이외의값<br>";
+			}
+		}
+
+		function testSwitch() {
+			/* switch문은 일치연산자(===)로 비교된다. */
+			switch (Number(document.querySelector("#switch").value)) {
+				case 1:
+					document.querySelector("#switchTest").innerHTML += "switch문 테스트 : 1<br>"
+					break;
+				case 2:
+					document.querySelector("#switchTest").innerHTML += "switch문 테스트 : 2<br>"
+					break;
+				default:
+					document.querySelector("#switchTest").innerHTML += "switch문 테스트 : 이외의값 <br>"
+					break;
+			}
+		}
+
+		function testWhile() {
+			var count = document.querySelector("#while").value;
+			while (count) {
+				document.querySelector("#whileTest").innerHTML += count + "<br>";
+				count--;
+			}
+
+		}
+
+		function testFor() {
+			document.querySelector("#forTest").innerHTML += document.querySelector("#for").value + "단 구구단 <br>";
+
+			for (var i = 1; i < 10; i++) {
+				document.querySelector("#forTest").innerHTML += document.querySelector("#for").value * i + "<br>";
+			}
+		}
+
+		function testForEach() {
+			var arr = (document.querySelector("#forEach").value).split("");
+			arr.foreach(
+				function (str, idx) {
+					document.querySelector("#forEachTest").innerHTML += idx + "번째 인덱스 : " + str + "<br>";
+				}
+			)
+
+		}
+
+		/*
+		ECMA Script
+		ECMA : 정보와 통신 시스템을 위한 국제 표준화 기구
+		자바스크립트는 ECMA-262 로 표준화된 스크립트 언어.
+
+		MDN : 모질라 개발자 네트워크! 가서 자주 보기!
+
+		*/
+
+
+	</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		div {
+			height: 200px;
+			border: 1px solid black;
+			background: lightgrey;
+			font-size: 1vw;
+		}
+	</style>
+
+	<meta charset="UTF-8">
+	<title>5_cache</title>
+</head>
+
+<body>
+
+	<div>
+		<form action="cache">
+			<button type="submit">cache</button>
+		</form>
+	</div>
+	<pre>
+		Cache-Control 헤더를 통해 캐시 정책을 지정할 수 있다.<br>
+		*ETag : 캐시에 저장된 컨텐츠와 서버의 컨텐츠가 다른지 검사하는 태그<br>
+		서버의 컨텐츠가 변경되면 ETag값이 바뀌게 된다.<br>
+		Cache-Control <br>
+		no-store : 캐시를 저장하지 않음<br>
+		no-cache : 매번 서버에서 ETag를 확인하겠다.<br>
+		-ETag가 변경되었으면 서버에서 자원을 다운받고 변경되지 않았으면 캐시에 저장된 자원을 사용하겠다.<br>
+		max-age : 캐시 수명, max-age 에 지정한 시간이 지나지 않았으면 서버에 묻지 않고 캐시에 저장된 자원을 사용<br>
+				  지정한 시간이 지나면 ETag를 비교.<br>
+
+		max-age = 0   ==    no-cache
+	</pre>
+
+</body>
+
+</html>

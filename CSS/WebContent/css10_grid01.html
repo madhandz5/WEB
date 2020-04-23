@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>css10_grid01</title>
+<style type="text/css">
+div, span {
+	color: black;
+	border: 1px solid;
+	font-size: 1.2vw;
+	margin: 0;
+
+	/*  
+	margin : 요소와 요소간의 거리
+	padding : 요소의 외곽과 컨텐츠간의 거리
+	*/
+}
+</style>
+</head>
+<body>
+	<h2>1. block / inline 요소</h2>
+
+	<div>block : 좌우 영역을 부모 요소의 전체 크기만큼 잡는다. 상하 영역은 컨텐츠의 크기만큼 잡는다.</div>
+	<span> inline : 상하 좌우 영역 모두 컨텐츠의 크기만큼 잡는다. </span>
+	<span> inline : 상하 좌우 영역 모두 컨텐츠의 크기만큼 잡는다. </span>
+
+
+
+	<br>
+	<br>
+
+	<h2>2. block / inline 요소의 height, width</h2>
+	<div style="height: 300px; width: 400px;">block : width 와 height
+		를 사용하여 크기를 지정할 수 있다.</div>
+
+	<span style="height: 10000px; width: 10000px"> inline : width 와
+		height로 크기를 지정할 수 없다. </span>
+
+	<br>
+	<br>
+
+	<h2>3. block / inline 요소의 margin과 padding</h2>
+	<div
+		style="height: 100px; width: 35%; margin: 0 0 1% 1%; padding: 1% 0 0 1%;">
+		block : margin 과 padding이 상하좌우 모두 적용된다.</div>
+
+	<div
+		style="height: 100px; width: 35%; margin: 0 0 1% 1%; padding: 1% 0 0 1%;">
+		block : margin 과 padding이 상하좌우 모두 적용된다.</div>
+
+	<span
+		style="height: 100px; width: 35%; margin: 0 0 1% 1%; padding: 1% 0 0 1%;">
+		inline : margin 과 padding 이 좌우만 적용된다.</span>
+
+	<div
+		style="height: 100px; width: 35%; margin: 0 0 1% 1%; padding: 1% 0 0 1%;">
+		block : margin 과 padding이 상하좌우 모두 적용된다.</div>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		div {
+			height: 200px;
+			border: 1px solid black;
+			background: lightgray;
+			font-size: 1vw;
+		}
+	</style>
+	<title>title</title>
+</head>
+
+<body>
+	<div>
+		<form action="pagechange/redirect">
+			<label>이름 : </label><input type="text" name="name">
+			<button type="submit">redirect</button>
+		</form>
+		<form action="pagechange/redirect/image">
+			<label>돈 : </label>
+			<button type="submit">돈 : redirect</button>
+		</form>
+	</div>
+
+	<br><br>
+
+	<form action="pagechange/forward">
+		<label>이름 : </label><input type="text" name="name">
+		<button type="submit">forward</button>
+	</form>
+
+	<form action="pagechange/forward/image">
+		<label>돈 : </label>
+		<button type="submit">돈 : forward</button>
+	</form>
+
+</body>
+
+</html>

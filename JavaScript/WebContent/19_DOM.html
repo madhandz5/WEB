@@ -1,0 +1,127 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			background-color: lightgrey;
+			border: 1px solid black;
+			height: auto;
+			width: auto;
+		}
+
+		#board tbody td {
+			border-top: 1px solid black;
+		}
+	</style>
+	<title>19_DOM</title>
+</head>
+
+<body>
+	<script>
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+		function $all(id) {
+			return document.querySelectorAll(id);
+		}
+	</script>
+	<H1>DOM(Document Object Model)</H1>
+	<h3>텍스트 노드가 있는 노드 생성</h3>
+	<button onclick="test1()">뽀로로 생성</button>
+	<div id="area1" class="area"></div>
+	<script>
+
+		function test1() {
+			//element 생성
+			var title = document.createElement("h3");
+			var title2 = document.createElement("h4");
+
+			//textnode 생성
+			var textNode = document.createTextNode("안녕? 나는 뽀로로야");
+
+			//appendChild() 매개변수가 반드시 엘리먼트이여야 한다.
+			title.appendChild(textNode);
+			//append() 매개변수가 엘리먼트여도 되고, 문자열이여도 된다.
+			title2.append("안녕? 나는 뽀로로야");
+
+			document.querySelector("#area1").appendChild(title);
+			document.querySelector("#area1").append(title2);
+		}
+	</script>
+	<h3>텍스트노드가 없는 노드 생성</h3>
+	<button onclick="test2()">이미지 생성</button>
+	<div id="area2" class="area"></div>
+	<script>
+		function test2() {
+			var imgTest = document.createElement("img");
+			imgTest.src = 'C:\\Users\\user2\\OneDrive\\changyoung.jpg';
+			imgTest.width = "150";
+			imgTest.height = "100";
+
+			document.querySelector("#area2").appendChild(imgTest);
+		}
+	</script>
+	<hr>
+	<h3>inner HTML</h3>
+	<button onclick="test3()">글작성</button>
+	<div id="area3" class="area"></div>
+	<table id="board" style="text-align: center;">
+		<tr>
+			<thead>
+				<th>글번호</th>
+				<th>글제목</th>
+				<th>작성자</th>
+				<th>조회수</th>
+				<th>작성일자</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</tr>
+	</table>
+	<script>
+		var num = 1;
+		var title = ["안녕하세요!", "가입인사", "아 졸려...", "언제 가요?", "오늘은 무슨 요일입니까?", "재미없어..", "와 대박!", "이걸 꼭 해야되요?", "역시 나랑은 안맞아..."];
+		var author = ["user", "itsme", "hi", "name", "unknown", "frozen", "disney", "shit"];
+		var date = new Date();
+		function test3() {
+			var hi = Math.abs(Math.ceil((Math.random() * 10) - 3));
+			document.querySelector("#board tbody").innerHTML +=
+				"<tr><td>" + num++ + "</td>" +
+				"<td>" + title[hi] + "</td>" +
+				"<td>" + author[hi] + "</td>" +
+				"<td>" + hi + "</td>" +
+				"<td>" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + "</tr></td>";
+		}
+	</script>
+	<h3>스타일 지정</h3>
+	<button onclick="test4()">실행확인</button>
+	<div id="area4" style="width: 150px; height: 150px;"></div>
+	<script>
+		function test4() {
+			document.querySelector("#area4").style.backgroundColor = "orangered";
+			document.querySelector("#area4").style.borderRadius = "90px";
+			document.querySelector("#area4").style.transition = "all 2s";
+		}
+	</script>
+	<h3>모두 삭제</h3>
+	<button onclick="test5()">실행확인</button>
+	<button onclick="test6()">살려내기</button>
+	<div id="area5" style="width: 150px; height: 150px;"></div>
+	<script>
+		document.querySelector("#area5").style.backgroundColor = "orangered";
+		document.querySelector("#area5").style.borderRadius = "90px";
+		function test5() {
+			// document.querySelector("#area4").remove();
+			document.querySelector("#area5").style.display = "none";
+		}
+		function test6() {
+			document.querySelector("#area5").style.display = "block";
+		}
+	</script>
+</body>
+
+</html>

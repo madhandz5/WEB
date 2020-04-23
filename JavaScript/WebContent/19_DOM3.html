@@ -1,0 +1,99 @@
+<html>
+
+<head>
+	<style>
+		p {
+			border: 1px solid red;
+		}
+
+		#test01,
+		#test02,
+		#test03 {
+			width: 300px;
+			height: auto;
+			border: 1px dotted blue;
+		}
+	</style>
+	<title>19_DOM3</title>
+</head>
+
+<body>
+	<h1>태그 추가하기</h1>
+	<button onclick="addAppend()">appendChild()</button>
+	<button onclick="addBefore()">insertBefore()</button>
+	<button onclick="moveElement()">appendChild()를 이용한 엘리먼트 이동</button>
+
+	<fieldset id="addele">
+		<legend>부모태그</legend>
+		<div>div 태그</div>
+	</fieldset>
+	<hr>
+
+	*test03
+	<div id="test03"></div>
+	<script>
+		function addAppend() {
+			var fieldSet = document.getElementById("addele");
+			var p = document.createElement("p");
+			// var txt = document.createTextNode("자식 태그들 중 마지막에 붙여 넣는다.");
+			// p.appendChild(txt);
+			p.textContent = "자식태그들 중 마지막에 붙여넣는다.";
+			fieldSet.appendChild(p);
+		}
+
+		function addBefore() {
+			var newP = document.createElement("p");
+			newP.textContent = "엘리먼트 앞에 붙여 넣는다.";
+
+			var fieldSet = document.getElementById("addele");
+			var oldDiv = document.querySelector("fieldset > div");
+
+			fieldSet.insertBefore(newP, oldDiv);
+		}
+
+		function moveElement() {
+			var moveEle = document.querySelector("fieldset").children[1];
+
+			var addEle = document.querySelector("#test03");
+
+			addEle.appendChild(moveEle);
+		}
+
+	</script>
+	<hr>
+	<h3>
+		문제 1 : #test01태그에 "domTest" 라는 내용을 가진 div태그를 추가하는 버튼을 만들어보자
+	</h3>
+	<button onclick="addTest()">문제 1 확인하기</button>
+	<div id="test01"></div>
+
+	<h3>
+		문제 2 : #test02태그에 test01에 추가된 태그들을 이동시키는 버튼을 만들어보자
+	</h3>
+	<div id="test02"></div>
+	<button onclick="moveTest()">문제 2 확인하기</button>
+
+
+	<script>
+		var num = 0;
+		function addTest() {
+			var hSet = document.getElementById("test01");
+			var addDiv = document.createElement("div");
+			addDiv.textContent = "domTest" + num++;
+			hSet.appendChild(addDiv);
+
+		}
+		function moveTest() {
+			var moveTest = document.querySelector("#test01").children[0];
+			var ori = document.querySelector("#test02");
+			ori.appendChild(moveTest);
+		}
+	</script>
+
+
+
+
+</body>
+
+
+</html>

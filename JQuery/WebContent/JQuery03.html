@@ -1,0 +1,100 @@
+<html>
+
+<head>
+	<script src="Resources/js/jquery-3.4.1.js"></script>
+	<title>jquery03</title>
+</head>
+
+<body>
+	<h1>입력 양식 선택자</h1>
+	<p>input태그의 type속성에 따라 문서객체 선택 가능</p>
+	<button onclick="jq()">jquery</button>
+	<button onclick="js()">javascript</button>
+	<label>텍스트 상자 : </label><input type="text">
+	<label>버튼 : </label><input type="button">
+	<label>파일 : </label><input type="file">
+	<label>이미지 : </label><input type="image">
+	<label>패스워드 : </label><input type="password">
+	<label>라디오버튼 : </label><input type="radio">
+	<label>submit버튼 : </label><input type="submit">
+
+	<script>
+		function jq() {
+			$("input:text").css("background", "red");
+			$("input:button").attr("value", "왕버튼").css({
+				"width": "200px",
+				"height": "100px"
+			});
+			$("input:file").css("background", "yellowgreen");
+			$("input:image").mouseenter(function () {
+				$(this).attr("src", "Resources/image/river1.PNG");
+			});
+			$("input:image").mouseout(function () {
+				$(this).attr("src", "Resources/image/flower1.PNG");
+			});
+
+
+			$("input:password").css("background", "yellow");
+
+			// 라디오버튼 체크 상태로 만들기
+			$("input:radio").attr("checked", true);
+			// 전송(submit) 버튼 배경색을 보라색으로, 글씨 색을 하얀색으로 지정
+			$("input:submit").css({
+				"background": "purple",
+				"color": "white"
+			});
+		}
+
+		function $one(selector) {
+			return document.querySelector(selector);
+		}
+
+		function js() {
+			// $("input:text").css("background", "red");
+			$one("input[type=text]").style.background = "red";
+
+			/* $("input:button").attr("value", "왕버튼").css({
+				"width": "200px",
+				"height": "100px"
+			}); */
+			$one("input[type=button]").setAttribute("value", "왕버튼");
+			$one("input[type=button]").style.width = "200px";
+			$one("input[type=button]").style.height = "100px";
+
+			// $("input:file").css("background", "yellowgreen");
+			$one("input[type=file]").style.background = "yellowgreen";
+
+			/* $("input:image").mouseenter(function () {
+				$(this).attr("src", "Resources/image/river1.PNG");
+			}); */
+			$one("input[type=image]").addEventListener("mouseenter", function (v) {
+				v.target.setAttribute("src", "Resources/image/river1.PNG");
+			});
+
+			$one("input[type=image]").addEventListener("mouseout", function (v) {
+				v.target.setAttribute("src", "Resources/image/flower1.PNG");
+			});
+
+			// $("input:password").css("background", "yellow");
+			$one("input[type=password]").style.background = "yellow";
+
+
+
+			// 라디오버튼 체크 상태로 만들기
+			// $("input:radio").attr("checked", true);
+
+			$one("input[type=radio]").checked = true;
+			// 전송(submit) 버튼 배경색을 보라색으로, 글씨 색을 하얀색으로 지정
+			// $("input:submit").css({
+			// 	"background": "purple",
+			// 	"color": "white"
+			// });
+			$one("input[type=submit]").style.background = "purple";
+			$one("input[type=submit]").style.color = "white";
+		}
+
+	</script>
+
+</body>
+
+</html>

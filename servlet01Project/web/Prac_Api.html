@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="KOR">
+
+<head>`
+	<link rel="stylesheet" href="resources/Css/default.css">
+	<link rel="stylesheet" href="resources/Css/style.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>도서 검색 (API from Daum)</title>
+</head>
+
+<body>
+	<div class="wrapper">
+		<h1 id="title">도서 검색 API from Daum</h1>
+		<hr>
+
+		<select id="searchType">
+			<option value="title">제목</option>
+			<option value="person">작가</option>
+			<option value="publisher">출판사</option>
+			<option value="isbn">ISBN</option>
+		</select>
+		<select id="sortType">
+			<option value="accuracy">정확도순</option>
+			<option value="recency">최근순</option>
+		</select>
+		<input type="text" id="searchKeyWord" placeholder="검색어를 입력하세요">
+		<button id="searchBtn">검색하기</button>
+
+		<select id="pageCnt">
+			<option value="10">10개</option>
+			<option value="25">25개</option>
+			<option value="50">50개</option>
+		</select>
+		<br><br>
+		<div class="none"></div>
+		<table border="1" id="contentstable">
+			<thead>
+				<tr>
+					<td>번호</td>
+					<td>제목</td>
+					<td>작가</td>
+					<td>표지</td>
+					<td>가격</td>
+					<td class="url">구매버튼</td>
+				</tr>
+			</thead>
+			<tbody id="body">
+			</tbody>
+		</table>
+		<ol class="paging">
+			<li class="first"><a href="#a">첫페이지</a></li>
+			<li class="prev"><a href="#a">이전페이지</a></li>
+			<li class="on"><a href="#a">1</a></li>
+			<li><a href="#a">2</a></li>
+			<li><a href="#a">3</a></li>
+			<li class="next"><a href="#a">다음페이지</a></li>
+			<li class="last"><a href="#a">마지막페이지</a></li>
+		</ol>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.4.1.js"
+		integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+	<script>
+		$(function () {
+			var pageNo = 1;
+			var isEnd = null;
+			$("#searchKeyWord").keydown(function (key) {
+				if (key.keyCode == 13) {
+					$("#searchBtn").click();
+				}
+			});
+			$("#searchBtn").click(function () {
+				pageNo = 1;
+				if ($("#searchKeyWord").val() === "") {
+					alert("검색어를 입력하세요");
+				} else {
+					bookSearch(pageNo);
+				}
+			});
+			function bookSearch(pageNo) {
+
+				$.ajax({
+					method: "GET",
+					url: "https://dapi.kakao.com/v3/search/book",
+					data:
+					{
+						query: $("#searchKeyWord").val(),
+						size: $("#pageCnt").val(),
+						target: $("#searchType").val(),
+						sort: $("#sortType").val(),
+						page: pageNo
+					},
+					headers: { Authorization: "KakaoAK 04a4ff3be0ac0a724b4508b9c7ae2d07" }
+				})
+					.done(function (msg) {
+
+						$("#body").html("");
+						$(".none").html("");
+						$("#pageCnt").css({ "display": "block" });
+						console.log(msg);
+						if (msg.documents.length > 0) {
+							var price = 0;
+							isEnd = msg.meta.is_end;
+							$("#contentstable").css({ "display": "table" });
+							$(".paging").css({ "display": "inline-block" });
+							for (var i = 0; i < msg.documents.length; i++) {
+								price = msg.documents[i].sale_price;
+								if (price < 0) {
+									price = "품절";
+								}
+								$("#body").append("<tr id=trow" + i + "><td>" + (i + 1) + "</td>");
+								$("#trow" + i).append("<td class='title'>" + msg.documents[i].title + "</td>");
+								$("#trow" + i).append("<td class='authors'>" + msg.documents[i].authors + "</td>")
+								if (msg.documents[i].thumbnail == "") {
+									$("#trow" + i).append("<td><img src='Resources/Image/noImage.png'></td>");
+								} else {
+									$("#trow" + i).append("<td class><img class='thumbnails' src='" + msg.documents[i].thumbnail + "'</td>");
+								}
+								$("#trow" + i).append("<td><span style='text-decoration:line-through; text-decoration-color:red; text-decoration-style: double;'>" + msg.documents[i].price + "</span><span><br> → " + price + "</span></td>");
+								$("#trow" + i).append("<td><a href='" + msg.documents[i].url + "'><button>구매하기</button></a></td></tr>");
+							}
+						} else {
+							$("#contentstable").css({ "display": "none" });
+							$(".paging").css({ "display": "none" });
+							$("#pageCnt").css({ "display": "none" });
+							$(".none").html("검색된 결과가 없습니다.");
+						}
+					});
+			}
+
+			$(".next").click(function () {
+				if (isEnd == true) {
+					alert("마지막 페이지입니다.");
+				} else {
+					bookSearch(++pageNo);
+				}
+			});
+
+			$(".prev").click(function () {
+
+				if (pageNo == "1") {
+					alert("첫번째 페이지입니다.");
+				} else {
+					bookSearch(--pageNo);
+				}
+			});
+
+			$(".first").click(function () {
+				if (pageNo == "1") {
+					alert("첫번째 페이지입니다.");
+				} else {
+					pageNo = 1;
+					bookSearch(pageNo);
+				}
+			})
+			$(".last").click(function () {
+				if (isEnd == true) {
+					alert("마지막 페이지 입니다.");
+				} else {
+					alert("마지막 페이지로 이동합니다. (아직 구현 안됨)");
+				}
+			})
+
+			$("#pageCnt").change(function () {
+				bookSearch(pageNo);
+			});
+		});
+
+	</script>
+
+</body>
+
+</html>

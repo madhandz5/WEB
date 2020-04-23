@@ -1,0 +1,128 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: auto;
+			border: 1px solid black;
+			background-color: lightgrey;
+		}
+
+		pre {
+			font-size: 1vw;
+		}
+	</style>
+	<title>11_Inheritance</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+	</script>
+	<h3>Inheritance</h3>
+	<div id="area1" class="area"></div>
+
+	<!-- 
+		프로토타입 객체의 프로퍼티를 마음대로 쓸 수 있다는 점을 사용해서
+		상속을 구현할 수 있다.
+	 -->
+
+	<script>
+		var person = {
+			name: "zzoon",
+			gender: "male",
+			setName: function (arg) {
+				this.name = arg;
+			},
+			getName: function () {
+				return this.name;
+			},
+			setGender: function (arg) {
+				this.gender = arg;
+			},
+			getGender: function () {
+				return this.gender;
+
+			},
+			toString: function () {
+				var result = new Array();
+				var index = 0;
+				for (var key in this) {
+					if (typeof (this[key]) != "function") {
+						result[index++] = key + " : " + this[key];
+					}
+				}
+				return result.sort().join(" / ");
+			}
+		}
+		var student = {
+			subject: "Programming",
+			job: "Student",
+			setSubject: function (arg) {
+				this.subject = arg;
+			},
+			getSubject: function () {
+				return this.subject;
+			},
+			setJob: function (arg) {
+				this.job = arg;
+			},
+			getJob: function () {
+				return this.job;
+			}
+		}
+
+		var teacher = {
+			salary: 10000,
+			job: "Teacher",
+			setSalary: function (arg) {
+				this.salary = arg;
+			},
+			getSalary: function () {
+				return this.salary;
+			},
+			setJob: function (arg) {
+				this.job = arg;
+			},
+			getJob: function () {
+				return this.job;
+			}
+		}
+		student.__proto__ = person;
+		teacher.__proto__ = person;
+
+		$("#area1", student);
+		$("#area1", teacher);
+
+		var who = {};
+		who.__proto__ = student;
+		student.setName("오창영");
+		$("#area1", who);
+
+		/* Object.create() */
+
+		function create_object(o) {
+			function F() { };
+			F.prototype = o;
+			return new F();
+		}
+
+
+		var who2 = Object.create(student);
+		$("#area1", who2);
+		who2.setName("신사임당");
+		who2.setGender("Female");
+		who2.__proto__ = teacher;
+		$("#area1", who2);
+
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,138 @@
+<html>
+
+<head>
+	<title>변수와 자료형</title>
+	<style>
+		.area1 {
+			border: 1px solid red;
+			height: 250px;
+		}
+	</style>
+</head>
+
+<body>
+	<h3>자료형</h3>
+	<p>자바스크립트에서는 자료형 별로 변수타입이 지정되지 않고 리터럴에 의해 자료형이 결정된다.</p>
+	<button onclick="typeTest()">자료형 테스트</button>
+	<br><br>
+	<div id="area1" class="area1">
+		<script type="text/javascript">
+			function typeTest() {
+				var name = '홍길동';  //String
+				var age = 20;  //number
+				var check = true //boolean
+				var hobby = ['축구', '농구', '야구'];
+				var user = {
+					name: '홍길동',
+					age: 20,
+					id: 'user01'
+				}
+
+				var testFunction = function testFunction(num1, num2) {
+					var sum = num1 + num2;
+					alert(sum);
+				} //확인
+
+				var area1 = document.getElementById("area1");
+				area1.innerHTML = "문자열 변수 : " + name + "<br>";
+				area1.innerHTML += "숫자 변수 : " + age + "<br>";
+				area1.innerHTML += "논리 변수 : " + check + "<br>";
+				area1.innerHTML += "배열 : " + hobby + "<br>";
+				area1.innerHTML += "객체 : " + user.name + ", " + user.age + ", " + user.id + "<br>";
+				area1.innerHTML += "함수 : " + testFunction(10, 10) + "<br>";
+			}
+		</script>
+	</div>
+	<h3>
+		String
+	</h3>
+	<p>
+		" ", ' ' 로 묶여있는 리터럴이다. <br>
+		자바스크립트의 내장객체로 String객체의 기본적인 메서드가 있다.
+	</p>
+	<button onclick="showStringMethod();">문자열처리메서드</button>
+	<div id="area2" class="area1"></div>
+	<script type="text/javascript">
+
+		function showStringMethod() {
+			var area2 = document.getElementById("area2");
+
+			area2.innerHTML += "toUpperCase() : " + "uclass".toUpperCase() + "<br>";
+			area2.innerHTML += "toLowerCase() : " + "uclass".toLowerCase() + "<br>";
+			area2.innerHTML += "length : " + "uclass".length + "<br>";
+			area2.innerHTML += "substring() : " + "uclass".substring(0, 3) + "<br>";
+
+			var str2 = "사과, 바나나, 복숭아, 키위, 파인애플";
+			var fruits = str2.split(",");
+
+			area2.innerHTML += " str2.splite()한 배열 " + fruits + "<br>";
+
+			/* 문자열은 문자 배열처럼 인덱스로 접근이 가능 */
+			for (var i = 0; i < str1.length; i++) {
+				area2.innerHTML += i + "번째 인덱스 : " + str1[i] + "<br>";
+
+				str1[i] = 'A';
+			}
+
+			area2.innerHTML += str1 + "<br>";
+		}
+
+	</script>
+	<hr>
+	<h3>Math</h3>
+	<button onclick="showMathMethod();">숫자 처리 메서드</button>
+	<div class="area1" id="area3"></div>
+	<script type="text/javascript">
+
+		function showMathMethod() {
+
+			var num1 = -123;
+			// abs() 절대값
+			$("area3", "-123 절대값 : " + Math.abs(num1));
+			// random() 난수 발생
+			$("area3", "난수 발생 : " + Math.random());
+			// floor() 내림
+			$("area3", "-123 내림 : " + Math.floor(-123));
+			// ceil() 올림
+			$("area3", "-123 올림 : " + Math.ceil(-123));
+			//round() 반올림
+			$("area3", "-123 반올림 : " + Math.round(-123));
+
+			$("area3", "<img src ='../Resources/Image/fly.jpg'>");
+
+		}
+
+		function $(id, value) {
+			document.getElementById(id).innerHTML += value + "<br>";
+		}
+
+	</script>
+
+	<h3>undefined / null</h3>
+	<button onclick="showNull();">undefined / null</button>
+	<div class="area1" id="area4"></div>
+	<script type="text/javascript">
+
+		/* 
+			undefined : 변수를 선언하고 초기화하지 않았을 때
+			자바스크립트가 변수에 넣어주는 값이면서 동시에 타입.
+
+			null : 개발자가 명시적으로 값이 비었음을 표시.
+		*/
+
+		function showNull() {
+			var undefinedVar;
+			var nullVar = null;
+			$("area4", typeof (undefinedVar));
+			$("area4", typeof (nullVar));
+		}
+
+
+
+	</script>
+
+
+
+</body>
+
+</html>

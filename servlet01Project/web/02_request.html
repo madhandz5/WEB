@@ -1,0 +1,80 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		label {
+			display: inline-block;
+			width: 100px;
+		}
+
+		div {
+			height: 250px;
+			border: 1px solid black;
+			background: lightgray;
+			font-size: 1vw;
+		}
+
+		#post {
+			height: auto;
+			border: 1px solid black;
+			background: lightgray;
+			font-size: 1vw;
+		}
+	</style>
+	<title>2_request</title>
+</head>
+
+<body>
+	<h3>request : get </h3>
+	<div>
+		<form action="request" method="get">
+			request get : <input name="name" type="text">
+			<button type="submit">전송하기</button>
+		</form>
+		<pre>
+			GET방식은 서버로부터 정보를 조회하기 위해 설계된 메소드<br>
+			데이터를 쿼리 스트링을 통해서 전송한다.<br>
+			쿼리 스트링 : 이름과 값의 쌍으로 이루어져 있다.<br>
+			여러 값을 보내야 할 경우에는 & 로 이어준다.
+			ex)?name=hmd&gender=male <br>
+			URI에 데이터 노출되어서 보안에 취약하다.<br>
+			전송하는 데이터의 길이에 제한이 있다.
+		</pre>
+	</div>
+	<h3>request : post </h3>
+	<div id="post">
+		<form action="request/urlencoded" method="post">
+			<label>name : </label><input type="text" name="name">
+			<label>age : </label><input type="text" name="age">
+			<input type="submit" value="전송하기">
+		</form>
+		<pre>
+			post : 전송할 데이터를 HTTP 메시지의 BODY에 담아서 전송, 전송하는 길이에 제한이 없다.<br>
+			POST 방식을 사용할 떄는 요청 헤더에 Content-Type을 표시해야 한다.<br>
+			form으로 전송할 경우 기본값으로 application/x-www-form-urlencoded 방식으로 지정되어 있다.<br>
+			form의 enctype속성을 통해서 변경이 가능하다.<br>
+			multipart/form-data 로 변경 가능. <br><br>
+
+			HTTP메시지<br>
+			-시작줄 <br>
+				1) HTTP Method<br>
+				2)URI주소 <br>
+				3)HTTP 버전<br>
+			-Heder<br>
+			-body : 데이터
+
+
+		</pre>
+	</div>
+	<h3>request : post enctype="multipart/form-data"</h3>
+	<div>
+		<form action="request/multi" method="post" enctype="multipart/form-data">
+			<label>text : </label><input type="text" name="text">
+			<label>file : </label><input type="file" name="file">
+			<button type="submit">전송하기</button>
+		</form>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,128 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: auto;
+			border: 1px solid red;
+			background-color: lightgrey;
+		}
+
+		.area-big {
+			height: 400px;
+			border: 1px solid red;
+			background-color: lightgrey;
+		}
+
+		pre {
+			font-size: 1vw;
+		}
+	</style>
+	<title>17_Event</title>
+</head>
+
+<body>
+	<script>
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+	</script>
+	<h1>이벤트</h1>
+	<h3>인라인 이벤트 모델</h3>
+	<button onclick="test0()">확인하기</button>
+	<script>
+		function test0() {
+			window.alert("test0() 실행확인");
+		}
+	</script>
+	<h3>이벤트 프로퍼티 등록</h3>
+	<button id="test1">확인하기</button>
+	<button id="test2">확인하기</button>
+	<div class="area" id="area1"></div>
+	<script>
+		$eventListener("#test1", function () {
+			$("#area1", "test1()함수 실행되었습니다.");
+			$("#area1", typeof (this));
+			console.dir(this);
+		});
+		$eventListener("#test2", function () {
+			$("#area1", "test2()함수 실행되었습니다. test1 이벤트 제거");
+			test1.onclick = null;
+		});
+	</script>
+
+	<h3>표준 이벤트 모델</h3>
+	<pre>
+		익스플로러 9부터 지원한다.
+	</pre>
+	<button id="btn">확인하기</button>
+	<script>
+		$eventListener("#btn", function () {
+			window.alert("표준 이벤트 실행 확인");
+		});
+	</script>
+	<h3>이벤트 발생 객체</h3>
+	<button id="test3">실행확인</button>
+	<button id="test4">실행확인</button>
+	<div id="area2" class="area">
+		<p id="targetTest" style="width:50%">나를 눌러봐</p>
+	</div>
+	<script>
+		$eventListener("#test3", function () {
+			this.style.backgroundColor = "red";
+			this.style.color = "white";
+		});
+
+
+		/* 
+			해당 메서드를 실행시킨 객체가 this에 바인딩 된다. 즉 #test4
+		*/
+		$eventListener("#test4", function () {
+			this.style.backgroundColor = "red";
+			this.style.color = "white";
+		});
+
+		// $eventListener("#targetTest", function (e) {
+		// 	e.target.style.backgroundColor = "red";
+		// 	e.target.style.color = "white";
+		// 	e.target.innerHTML = e.target.id;
+		// });
+		/* 
+			매개변수 e에는 브라우저가 반환해주는 이벤트 객체가 담겨있다.
+			이벤트 객체의 target 프로퍼티를 통해 이벤트가 발생한 요소에 접근할 수 있다.
+		*/
+		$eventListener("#area2", function (e) {
+			e.target.style.backgroundColor = "red";
+			e.target.style.color = "white";
+			e.target.innerHTML = e.target.id;
+		});
+	</script>
+	<h3>기본 이벤트의 제거</h3>
+	<!-- 
+		a태그에는 href 속성에 담겨있는 주소로 페이지를 이동시켜주는 기본 이벤트가 등록되어있다.
+	 -->
+	<a href="http://www.naver.com" onclick="return test5()">네이버</a>
+	<a href="http://www.daum.net" id="listen">다음</a>
+
+	<script>
+		function test5() {
+			window.alert("기본이벤트가 제거되어 다음으로 이동합니다.");
+			location.href = "https://www.daum.net";
+			return false;
+		}
+
+
+		$eventListener("#listen", function (e) {
+			alert("기본이벤트가 제거되어 구글로 이동합니다.");
+			location.href = "http://www.google.com";
+			e.preventDefault();
+		})
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		.area1 {
+			border: 1px solid red;
+			height: 150px;
+			width: 800px;
+		}
+
+		.area2 {
+			border: 1px solid red;
+			height: 150px;
+			width: 800px;
+		}
+	</style>
+	<title>05_Array</title>
+</head>
+
+<body>
+	<h1>배열</h1>
+	<h3>배열이란?</h3>
+	<pre>
+	자바스크립트에서는 자료형 지정이 없기 때문에 모든 자료형을 보관하는 변수의 모음을 배열로 처리한다.
+	</pre>
+	<button onclick="arrayTest1()">확인하기</button>
+	<div class="area1" id="area1"></div>
+	<script type="text/javascript">
+
+		function arrayTest1() {
+			var area1 = document.querySelector("#area1");
+			var arr1 = ["하명도", 20, true, [1, 2, 3, 4]];
+			area1.innerHTML += arr1 + "<br>";
+		}
+	</script>
+
+	<h3>array 객체의 메서드</h3>
+	<p>array 의 메서드들</p>
+	<h4>indexOf()</h4>
+	<button onclick="arrayTest2()">확인하기</button>
+	<div class="area1" id="area2"></div>
+	<script type="text/javascript">
+
+		function arrayTest2() {
+			var arr2 = ["사과", "딸기", "바나나"];
+
+			//document.querySelector("#area2").innerHTML += arr2.indexOf("바나나") + "<br>";
+
+			$("#area2", arr2.indexOf("바나나"));
+		}
+
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+		}
+	</script>
+
+	<h4>concat(배열명) : 배열을 결합한다.</h4>
+	<button onclick="arrayTest3()">확인하기</button>
+	<div class="area1" id="area3"></div>
+	<script type="text/javascript">
+		function arrayTest3() {
+			var arr1 = ["사과", "딸기", "바나나"];
+			var arr2 = ["복숭아", "키위", "포도"];
+			var arr3 = arr1.concat(arr2);
+			var arr4 = arr2.concat(arr1);
+			var arr5 = arr3.concat(arr1, arr2);
+
+			$("#area3", "arr1 : " + arr1);
+			$("#area3", "arr2 : " + arr2);
+			$("#area3", "arr1.concat(arr2) : " + arr3);
+			$("#area3", "arr2.concat(arr1) : " + arr4);
+			$("#area3", "arr3.concat(arr1, arr2) : " + arr5);
+		}
+	</script>
+
+	<h4>join() : 배열을 결합하여 문자열로 반환한다.</h4>
+	<button onclick="arrayTest4()">확인하기</button>
+	<div class="area1" id="area4"></div>
+	<script type="text/javascript">
+		function arrayTest4() {
+			var arr = ["해리포터", "반지의제왕", "왕좌의게임", "나니아연대기"];
+			var arrJoin1 = arr.join(" ");
+			var arrJoin2 = arr.join("/");
+
+
+			$("#area4", "arrJoin1 : " + arrJoin1);
+			$("#area4", "arrJoin2 : " + arrJoin2);
+
+		}
+	</script>
+	<h4>reverse() : 배열의 순서를 뒤집는 메서드</h4>
+	<button onclick="arrayTest5()">확인하기</button>
+	<div class="area1" id="area5"></div>
+	<script type="text/javascript">
+		function arrayTest5() {
+
+			var arr = [1, 2, 3, 4, 5];
+
+
+			$("#area5", "arr : " + arr);
+			$("#area5", "arr.reverse() : " + arr.reverse());
+			$("#area5", "arr : " + arr);
+
+		}
+	</script>
+
+	<h4>sort() : 배열의 정렬</h4>
+	<button onclick="arrayTest6()">확인하기</button>
+	<div class="area1" id="area6"></div>
+	<script type="text/javascript">
+		function arrayTest6() {
+			var arr = ["102", "12", "342", "234", "242", "22", "377", "34"];
+			$("#area6", "arr : " + arr);
+			$("#area6", "arr.sort(오름차순) : " + arr.sort());
+			$("#area6", "arr.sort(오름차순(콜백함수)) : " + arr.sort(
+				function (left, right) {
+					return left - right;
+				}
+
+			));
+			$("#area6", "arr.sort(내림차순) : " + arr.sort(
+				function (left, right) {
+					return right - left;
+				}
+			));
+			$("#area6", "arr : " + arr);
+		}
+	</script>
+
+
+	<h4>push() : 배열의 맨 뒤에 요소를 추가한다. <br> pop() : 배열의 맨 뒤의 요소를 제거한다.</h4>
+	<button onclick="arrayTest7()">확인하기</button>
+	<div class="area1" id="area7"></div>
+	<script type="text/javascript">
+		function arrayTest7() {
+			var arr = ["서초동", "역삼동", "삼성동", "대치동"];
+
+			$("#area7", "원본배열 : " + arr);
+			$("#area7", "arr.push() : " + arr.push("남양주"));
+			$("#area7", "원본배열 : " + arr);
+			$("#area7", "arr.pop() : " + arr.pop());
+			$("#area7", "원본배열 : " + arr);
+
+		}
+	</script>
+	<h4>shift() : 배열의 맨 앞에 요소 제거. <br> unshift() : 배열의 맨 앞에 요소 추가</h4>
+	<button onclick="arrayTest8()">확인하기</button>
+	<div class="area1" id="area8"></div>
+	<script type="text/javascript">
+		function arrayTest8() {
+			var arr = ["서초동", "역삼동", "삼성동", "대치동"];
+			$("#area8", "원본배열 : " + arr);
+			$("#area8", "arr.shift(\"남양주\") : " + arr.shift("남양주"));
+			$("#area8", "원본배열 : " + arr);
+			$("#area8", "arr.unshift(\"삼성동\") : " + arr.unshift("삼성동"));
+			$("#area8", "원본배열 : " + arr);
+		}
+	</script>
+
+	<h4>slice() : 배열의 요소를 선택해 잘라내기<br> splice() 배열의 요소 제거 및 추가</h4>
+	<button onclick="arrayTest9()">확인하기</button>
+	<div class="area1" id="area9"></div>
+	<script type="text/javascript">
+		function arrayTest9() {
+			var arr = ["서초동", "역삼동", "삼성동", "대치동"];
+			$("#area9", "원본배열 : " + arr);
+
+
+			/* slice(2,4) */
+
+			$("#area9", "arr.slice(2,5) : " + arr.slice(2, 5));
+			$("#area9", "원본배열 : " + arr);
+			$("#area9", "arr.splice(2,2,\"창원\") : " + arr.splice(2, 2, "창원"));
+			$("#area9", "원본배열 : " + arr);
+
+		}
+	</script>
+</body>
+
+</html>

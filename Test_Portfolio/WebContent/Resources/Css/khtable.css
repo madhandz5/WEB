@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+#wrapper {
+	height: 240px;
+	width: 345px;
+}
+
+#subject {
+	font-size: 25px;
+	color: red;
+	font-weight: bold;
+	text-align: center;
+}
+
+table {
+	background-color: white;
+	text-align: center;
+}
+
+thead {
+	background-color: red;
+	color: white;
+	font-weight: bold;
+}
+
+tbody {
+	background-color: orange;
+	color: black;
+}
+
+button {
+	background-color: green;
+	color: white;
+}
+
+tfoot {
+	background-color: yellow;
+	color: red;
+	font-weight: bold;
+}

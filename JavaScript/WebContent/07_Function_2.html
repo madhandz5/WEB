@@ -1,0 +1,113 @@
+<html>
+
+<head>
+	<style>
+		p {
+			width: 500px;
+			height: 100px;
+			background-color: lightgray;
+			border: 1px solid black;
+		}
+	</style>
+	<title>07_Function_2</title>
+</head>
+
+<body>
+	<script type="text/javascript">
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+
+	</script>
+	<h3>함수의 매개변수</h3>
+	<!-- 
+		자바스크립트의 함수는 매개변수를 마음대로 넣어도 된다.
+	 -->
+
+	<button id="btn1">argument</button>
+	<p id="p1"> </p>
+	<script>
+
+		/* 
+		함수가 호출될 때 자동으로 argument객체와 this 인자가 넘어온다.
+		argument 객체는 length 프로퍼티를 가지고 있는 유사배열이다.
+		
+		*/
+		function test1(value) {
+			if (arguments.length == 0) {
+				$("#p1", "인자를 안넘겼습니다.");
+			} else {
+				for (var i = 0; i < arguments.length; i++) {
+					$("#p1", arguments[i]);
+				}
+			}
+
+		}
+
+		document.querySelector("#btn1").addEventListener("click", function () {
+			var msg;
+			if (!(msg = window.prompt("이름을 입력하세요"))) {
+				test1();
+			} else {
+				test1("안녕하세요", "반갑습니다.", msg);
+			}
+		})
+	</script>
+
+	<h3>함수를 매개변수로 전달하기</h3>
+	<button id="btn2">실행확인</button>
+	<p id="p2"></p>
+	<script>
+
+
+		function fn(outer) {
+			return "fn : 안녕하세요. 저는 매개변수로 넘어온 함수입니다." + outer;
+		}
+		function test2(argFunction) {
+			$("#p2", argFunction("반가워요 저는 매개변수로 넘어온 함수의 매개변수 입니다."));
+		}
+
+
+
+		$eventListener("#btn2", function () {
+			test2(fn)
+		}
+		);
+
+	</script>
+
+	<!-- 
+		콜백함수 : 어떤 이벤트가 발생한 후 수행될 함수의 의미
+	 -->
+
+	<h3>콜백함수</h3>
+	<div id="div4" style="background-color: green; width : 200px; height : 200px; color : white;">
+		callBack
+	</div>
+	<p id="p3"></p>
+	<script>
+		/*
+		setTimeout(fn, time)
+		*/
+		$eventListener("#div4", function (e) {
+			setTimeout(function () {
+				e.target.style.backgroundColor = "grey";
+				$("#p3", "1");
+			}, 0);
+		});
+		$("#p3", "2");
+		$("#p3", "3");
+		$("#p3", "4");
+		$("#p3", "5");
+
+
+	</script>
+
+</body>
+
+</html>

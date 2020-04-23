@@ -1,0 +1,63 @@
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<style>
+		div {
+			font-size: 1vw;
+			background: lightblue;
+			width: 50%;
+			height: 100px;
+		}
+	</style>
+	<title>1.submit</title>
+</head>
+
+<body>
+	<h1>서버와 통신하기</h1>
+	<h3>case.1</h3>
+
+	<!-- 
+		action : url 지정
+		method : http Method 지정
+		html5는 get과 post만 제공해준다.
+		그 외의 것들 : put, delete, fetch, HEAD....
+	-->
+	<form action="hello" method="get">
+		<!-- 
+			form 태그안에 input 태그들의 데이터를 hello라는 url로, get방식으로 전송해라.
+		 -->
+		<input type="submit" value="hello get 방식으로 통신">
+	</form>
+	<br><br>
+
+
+	<h3>case.2</h3>
+	<form action="hello" method="post">
+		<!-- 
+			form 태그안에 input 태그들의 데이터를 hello라는 url로, post방식으로 전송해라.
+		 -->
+		<input type="submit" value="hello post 방식으로 통신">
+		<button type="submit"> hello post 방식으로 전송하기</button>
+	</form>
+
+	<h3>case.3</h3>
+	<a href="hello">hello a태그로 이동하기</a>
+	<br><br>
+	<h3>case.4</h3>
+	<div onclick="loc()">
+		자바스크립트의 location.href 활용해서 hello로 이동
+
+		<h3>클릭~!</h3>
+	</div>
+	<br>
+	<script type="text/javascript">
+
+		function loc() {
+			location.href = "hello";
+		}
+
+	</script>
+</body>
+
+</html>

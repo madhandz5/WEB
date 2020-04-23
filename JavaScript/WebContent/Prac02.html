@@ -1,0 +1,90 @@
+<html>
+
+<head>
+	<style>
+		#colorbox {
+			width: 320px;
+			height: 320px;
+			position: relative;
+		}
+
+		#colorbox div {
+			width: 150px;
+			height: 150px;
+			border: 1px solid black;
+			position: absolute;
+		}
+
+		#yellow {
+			left: 160px;
+		}
+
+		#blue {
+			top: 160px;
+		}
+
+		#black {
+			left: 160px;
+			top: 160px;
+		}
+	</style>
+	<title>Prac02</title>
+</head>
+
+<body>
+
+	<div id="colorbox">
+		<div id="red">red</div>
+		<div id="yellow">yellow</div>
+		<div id="blue">blue</div>
+		<div id="black">black</div>
+	</div>
+	<div id="base">
+		<input type="checkbox" name="all">전체선택<br>
+		<input type="checkbox" name="chk" value="red">빨강<br>
+		<input type="checkbox" name="chk" value="yellow">노랑<br>
+		<input type="checkbox" name="chk" value="blue">파랑<br>
+		<input type="checkbox" name="chk" value="black">검정<br>
+		<button onclick="sel()">선택</button>
+		<button onclick="clearDiv()">클리어</button>
+	</div>
+	<script>
+		document.querySelector("input[name=all]").addEventListener("click", function () {
+			if (this.checked) {
+				document.querySelectorAll("input[name=chk").forEach(function (v) {
+					v.checked = true;
+				});
+			} else {
+				document.querySelectorAll("input[name=chk").forEach(function (v) {
+					v.checked = false;
+				});
+
+			}
+		});
+
+
+		function sel() {
+			document.querySelectorAll("input[name=chk]").forEach(function (v) {
+				if (v.checked) {
+					document.getElementById(v.value).style.backgroundColor = v.value;
+				} else {
+					document.getElementById(v.value).style.backgroundColor = "white";
+				}
+			});
+		}
+
+		function clearDiv() {
+			document.querySelectorAll("#colorBox div").forEach(function (v) {
+				v.style.backgroundColor = "white";
+			});
+
+			document.querySelectorAll("input[type=checkBox]").forEach(function (v) {
+				v.checked = false;
+			});
+		}
+
+	</script>
+
+</body>
+
+</html>

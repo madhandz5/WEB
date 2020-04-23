@@ -1,0 +1,111 @@
+<html>
+
+<head>
+	<style>
+		.area {
+			height: auto;
+			border: 1px solid red;
+			background-color: lightgrey;
+		}
+
+		.area-big {
+			height: 400px;
+			border: 1px solid red;
+			background-color: lightgrey;
+		}
+
+		pre {
+			font-size: 1vw;
+		}
+	</style>
+	<title>14_BuiltInObject</title>
+</head>
+
+<body>
+	<script>
+		function $(id, value) {
+			document.querySelector(id).innerHTML += value + "<br>";
+			return document.querySelector(id);
+		}
+		function $eventListener(id, value) {
+			document.querySelector(id).addEventListener("click", value);
+		}
+	</script>
+	<h1>내장 객체</h1>
+	<h3>Object 객체</h3>
+	<pre>자바 스크립트의 가장 기본적인 내장 객체이다.<br>
+		<h3>Object 객체의 기본 메서드</h3><br>
+		1. hasOwnProperty()<br>
+		2. propertyIsEnumerable()<br>
+	</pre>
+	<button onclick="test01()">실행확인</button>
+	<div id="area1" class="area"></div>
+	<script>
+		function test01() {
+			var obj = {
+				age: 20
+			}
+			$("#area1", "name 속성 유무 : " + obj.hasOwnProperty("name"));
+			$("#area1", "name 속성 유무 : " + obj.hasOwnProperty("age"));
+			$("#area1", "name 속성 유무 : " + obj.propertyIsEnumerable("name"));
+			$("#area1", "name 속성 유무 : " + obj.propertyIsEnumerable("age"));
+		}
+
+
+	</script>
+	<h3>String 객체의 HTML관련 메서드</h3>
+	<button onclick="test02()">실행확인</button>
+	<div id="area2" class="area"></div>
+	<script>
+		function test02() {
+			var str = "javascript";
+			$("#area2", str);
+			$("#area2", str + " " + str.anchor());
+			$("#area2", str + " " + str.big());
+			$("#area2", str + " " + str.bold());
+			$("#area2", str + " " + str.fontcolor("red"));
+			$("#area2", str + " " + str.italics());
+			$("#area2", str + " " + str.link("http://www.naver.com"));
+			$("#area2", str + " " + str.small());
+			$("#area2", str + " " + str.strike());
+			$("#area2", str + " " + str.sub());
+			$("#area2", str + " " + str.sup());
+		}
+
+	</script>
+	<h3>Date객체</h3>
+	<button onclick="test03()">실행확인</button>
+	<div id="area3" class="area"></div>
+	<script>
+		function test03() {
+			//현재 시간
+			var date1 = new Date();
+			$("#area3", date1);
+			// 연 월(월-1) 일 시 분 초
+			var date2 = new Date(2020, 02, 18, 19, 19, 0);
+			$("#area3", date2);
+
+			$("#area3", "년 : " + date1.getFullYear());
+			$("#area3", "월 : " + (date1.getMonth() + 1));
+			$("#area3", "일 : " + date1.getDate());
+			$("#area3", "요일 : " + date1.getDay());
+			$("#area3", "시 : " + date1.getHours());
+			$("#area3", "분 : " + date1.getMinutes());
+			$("#area3", "초 : " + date1.getSeconds());
+			$("#area3", "밀리세컨드 : " + date1.getMilliseconds());
+			//1970 / 1 / 1  자정을 기준으로 밀리세컨드로 번환
+			$("#area3", date1.getTime());
+
+			//2019년 12월 19일 개강
+			//개강이후 며칠이 흘렀는지 구해주세요.
+
+			var open = new Date(2019, 11, 19, 0, 0, 0);
+			$("#area3", Math.floor((date1 - open) / 1000 / 60 / 60 / 24) + "일");
+
+		}
+
+
+	</script>
+</body>
+
+</html>
