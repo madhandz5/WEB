@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Member">
+	<resultMap type="map" id="resultMember">
+		<!-- id : primary key / result : 일반컬럼 -->
+		<id column="m_id" property="m_id" />
+		<result column="m_password" property="m_password" />
+		<result column="m_email" property="m_email" />
+		<result column="m_grade" property="m_grade" />
+		<result column="m_tell" property="m_tell" />
+		<result column="m_reg_date" property="m_reg_date" />
+		<result column="m_rentable_date" property="m_rentable_date" />
+	</resultMap>
+
+	<resultMap type="map" id="resultBook">
+		<id column="b_bno" property="b_bno" />
+		<result column="b_title" property="b_title" />
+		<result column="b_author" property="b_author" />
+		<result column="b_rent_cnt" property="b_rent_cnt" />
+		<result column="b_rent_yn" property="b_rent_yn" />
+		<result column="b_isbn" property="b_isbn" />
+	</resultMap>
+
+
+	<!-- #{} : 자동으로 쿼리문 안에서 앞 뒤에 ' ' 를 붙여줌 -->
+	<select id="selectMember" resultType="Member">
+		select * from tb_member	where m_id = #{m_id}
+	</select>
+
+	<!-- ${} : ' ' 이 붙지 않음 -->
+	<select id="selectBook" resultMap="resultBook">
+		select * from ${tableName}
+
+	</select>
+
+
+</mapper>
