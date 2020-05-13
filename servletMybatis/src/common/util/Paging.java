@@ -1,84 +1,87 @@
+/**
+ * @PackageName: common.util
+ * @FileName : Paging.java
+ * @Date : 2020. 4. 20.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 package common.util;
 
+/**
+ * @PackageName: common.util
+ * @FileName : Paging.java
+ * @Date : 2020. 4. 20.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 public class Paging {
-
-	// í˜„ì¬ í˜ì´ì§€
+	
+	//ÇöÀç ÆäÀÌÁö
 	private int currentPage;
-	// ì „ì²´ ê²Œì‹œë¬¼ ìˆ˜
+	//ÀüÃ¼ °Ô½Ã¹° ¼ö
 	private int total;
-	// í˜ì´ì§€ë‹¹ ê²Œì‹œë¬¼
+	//ÆäÀÌÁö´ç °Ô½Ã¹° ¼ö
 	private int cntPerPage;
-
-	//ë¸”ë¡ ì•ˆì˜ í˜ì´ì§€ ìˆ˜
+	
+	//ºí·Ï ¾ÈÀÇ ÆäÀÌÁö³Ñ¹ö ¼ö
 	private int blockCnt = 5;
-
-	// ë¸”ë¡ ì‹œì‘ ë²ˆí˜¸
+	//ºí·Ï ½ÃÀÛ ¹øÈ£
 	private int blockStart;
-	// ë¸”ë¡ ë ë²ˆí˜¸
+	//ºí·Ï ³¡ ¹øÈ£
 	private int blockEnd;
-	// ì „ì²´ í˜ì´ì§€ ìˆ˜
+	//ÀüÃ¼ ÆäÀÌÁö ¼ö
 	private int lastPage;
-
-	// sqlì—ì„œ ì‚¬ìš©í•  ì‹œì‘ ê°’
+	
+	//sql¿¡¼­ »ç¿ëÇÒ ½ÃÀÛ °ª
 	private int start;
-	// sqlì—ì„œ ì‚¬ìš©í•  ë ê°’
+	//sql¿¡¼­ »ç¿ëÇÒ ³¡ °ª
 	private int end;
-
+	
 	public Paging() {
-		super();
+		
 	}
-
+	
 	public Paging(int total, int currentPage, int cntPerPage) {
-		this.currentPage = currentPage;
+		
 		this.total = total;
+		this.currentPage = currentPage;
 		this.cntPerPage = cntPerPage;
 		//
-		calAllPage(total, cntPerPage);
+		calAllPage(total,cntPerPage);
 		calBlockEnd(currentPage, blockCnt);
 		calBlockStart(blockEnd, blockCnt);
 		calEnd(currentPage, cntPerPage);
 		calStart();
 	}
-
+	
+	//ÀüÃ¼ ÆäÀÌÁö ¼ıÀÚ ±¸ÇÏ±â
 	public void calAllPage(int total, int cntPerPage) {
-
-		lastPage = ((total - 1) / cntPerPage) + 1;
-
+		//total/cntPerPage ÇÑ ÈÄ ¿Ã¸²Ã³¸® ÇÑ °Í°ú °°´Ù.
+		lastPage = (total-1)/cntPerPage + 1;
 	}
-
-	// í˜„ì¬ í˜ì´ì§€ ë„˜ë²„ : 23
-	// ë¸”ë¡ë‹¹ í˜ì´ì§€ ë„˜ë²„ : 5
-	// << < 21 22 23 24 25 > >>
-	//í˜„ì¬ ë¸”ë¡ì˜ ë§ˆì§€ë§‰ ë²ˆí˜¸ : ((23-1)/5 +1) *5
-	// í˜„ì¬ ë¸”ë¡ì˜ ì²« ë²ˆí˜¸ :
-	// í˜„ì¬ ë¸”ë¡ì˜ ë§ˆì§€ë§‰ ë²ˆí˜¸ - ë¸”ë¡ë‹¹ í˜ì´ì§€ ë„˜ ìˆ˜ + 1
-	// (23/5)*5+1
-
-	//ë¸”ëŸ­ë‹¹ ì‹œì‘ ë í˜ì´ì§€ ë„˜ë²„ êµ¬í•˜ê¸°
-
+	
+	//ºí·°´ç  ³¡ ÆäÀÌÁö ³Ñ¹ö ±¸ÇÏ±â
 	public void calBlockEnd(int currentPage, int blockCnt) {
-
-		blockEnd = ((currentPage - 1) / blockCnt + 1) * blockCnt;
-		if (lastPage < blockEnd) {
+		
+		blockEnd = ((currentPage-1)/blockCnt+1) * blockCnt;
+		if(lastPage < blockEnd) {
 			blockEnd = lastPage;
 		}
 	}
-
-	//ë¸”ëŸ­ë‹¹ ì‹œì‘ í˜ì´ì§€ ë„˜ë²„ êµ¬í•˜ê¸°
+	
+	//ºí·°´ç ½ÃÀÛ ÆäÀÌÁö ³Ñ¹ö ±¸ÇÏ±â
 	public void calBlockStart(int blockEnd, int blockCnt) {
-		blockStart = blockEnd - blockCnt + 1;
-
-		if (blockStart < 1) {
+		blockStart = ((currentPage-1)/blockCnt) * blockCnt+1;
+		if(blockStart  <  1) {
 			blockStart = 1;
 		}
 	}
-
-	//DBì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•  ë ê°’ êµ¬í•˜ê¸°
+	
+	//DBÄõ¸®¿¡¼­ »ç¿ëÇÒ ³¡°ª ±¸ÇÏ±â
 	public void calEnd(int currentPage, int cntPerPage) {
 		end = currentPage * cntPerPage;
 	}
-
-	//DBì¿¼ë¦¬ì—ì„œ ì‚¬ìš©í•  ì‹œì‘ ê°’ êµ¬í•˜ê¸°
+	
 	public void calStart() {
 		start = end - cntPerPage + 1;
 	}
@@ -161,5 +164,54 @@ public class Paging {
 				+ blockCnt + ", blockStart=" + blockStart + ", blockEnd=" + blockEnd + ", lastPage=" + lastPage
 				+ ", start=" + start + ", end=" + end + "]";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

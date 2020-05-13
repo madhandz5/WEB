@@ -1,49 +1,60 @@
+/**
+ * @PackageName: common.frontcontroller
+ * @FileName : HandlerAdapter.java
+ * @Date : 2020. 4. 13.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 package common.frontcontroller;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+/**
+ * @PackageName: common.frontcontroller
+ * @FileName : HandlerAdapter.java
+ * @Date : 2020. 4. 13.
+ * @ÇÁ·Î±×·¥ ¼³¸í : HandlerMappingÀÇ °á°ú¿¡ µû¶ó ¸Ş¼­µå¸¦ ½ÇÇà
+ * @author 
+ */
 public class HandlerAdapter {
-	// ì‚¬ìš©ìë¡œë¶€í„° í•´ë‹¹ ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ë°›ì•„
-
-	public ModelAndView excute(Controller ctr, String methodName, HttpServletRequest request) {
-
+	
+	public ModelAndView excute(Controller ctr, String methodName, HttpServletRequest request) throws ServletException {
+		
 		ModelAndView mav = null;
-
-		// Objectí´ë˜ìŠ¤ë¡œ ë¶€í„° ìƒì†ë°›ì€ getClass ë©”ì„œë“œë¥¼ ì‚¬ìš©í•´ì„œ í•´ë‹¹ ê°ì²´ì˜
-		// Class ê°ì²´ë¥¼ ë°˜í™˜ë°›ëŠ”ë‹¤.
-		Class c = ctr.getClass();
-
+		
 		try {
-			// í´ë˜ìŠ¤ CLASSê°€ ê°€ì§€ê³  ìˆëŠ” getDeclaredMethod()ë¥¼ í™œìš©í•´ì„œ
-			// ì´ë¦„ì´ methodNameì¸ ë©”ì„œë“œ ê°ì²´ë¥¼ ë°˜í™˜
+			
+			/*
+			 * if(HttpServletRequest.class ==
+			 * (Class.forName("javax.servlet.http.HttpServletRequest"))) {
+			 * System.out.println("µÎ Å¬·¡½º °´Ã¼´Â °°´Ù."); }else {
+			 * System.out.println("µÎ Å¬·¡½º °´Ã¼´Â ´Ù¸£´Ù."); }
+			 * 
+			 * if(HttpServletRequest.class == request.getClass()) {
+			 * System.out.println("µÎ Å¬·¡½º °´Ã¼´Â °°´Ù."); }else {
+			 * System.out.println("µÎ Å¬·¡½º °´Ã¼´Â ´Ù¸£´Ù."); }
+			 */
+			
+			//ObjectÅ¬·¡½ºÀÇ getClass ¸Ş¼­µå·Î ¹è¿­·Î ¹Ş¾Æ¿Â °´Ã¼ÀÇ Å¬·¡½º¸¦ ¹İÈ¯ ¹ŞÀ½
+			Class<? extends Controller> c = ctr.getClass();
+			
+			//Å¬·¡½º Å¬·¡½º°¡ °¡Áö°í ÀÖ´Â getDeclaredMethod()¸¦ È°¿ëÇØ¼­ 
+			//ÀÌ¸§ÀÌ indexÀÎ ¸Ş¼­µå °´Ã¼¸¦ ¹İÈ¯, ¸Å°³º¯¼ö°¡ ÀÖ´Ù¸é ¸Å°³º¯¼öÀÇ Å¬·¡½º°´Ã¼µµ µÚ¿¡ ³Ö¾îÁà¾ßÇÑ´Ù.
 			Method exMethod = c.getDeclaredMethod(methodName, HttpServletRequest.class);
-
-			// ì‹¤í–‰í•˜ê³  ê²°ê³¼ë¥¼ ë°˜í™˜ ë°›ëŠ”ë‹¤.
-			mav = (ModelAndView) exMethod.invoke(ctr, request);
-
-		} catch (NoSuchMethodException e) {
-			// TODO Auto-generated catch block
+			
+			//¸Ş¼­µå¸¦ ½ÇÇàÇÏ°í ModelAndView °´Ã¼¸¦ ¹İÈ¯ ¹Ş´Â´Ù.
+			
+			mav = (ModelAndView)exMethod.invoke(ctr, request);
+		
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ServletException(e.getMessage());
 		}
-
+		
 		return mav;
-
 	}
 
 }

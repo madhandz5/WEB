@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Book">
+	<select id="selectBookList" resultType="Book">
+		select c_info, b_title,
+		b_bno, b_author, b_rent_cnt, b_rent_yn, b_isbn from
+		tb_book inner join
+		tb_code on b_category = c_code where b_rent_yn =
+		'N' and b_title
+		like'%'||#{title}||'%'
+	</select>
+
+	<resultMap type="map" id="resultBook">
+		<id column="c_code" property="c_code" />
+		<result column="c_info" property="c_info" />
+		<result column="b_title" property="b_title" />
+		<result column="b_bno" property="b_bno" />
+		<result column="b_author" property="b_author" />
+		<result column="b_rent_cnt" property="b_rent_cnt" />
+		<result column="b_rent_yn" property="b_rent_yn" />
+		<result column="b_isbn" property="b_isbn" />
+	</resultMap>
+
+	<select id="selectBook" resultMap="resultBook">
+		select c_info,b_title, b_bno,
+		b_author, b_rent_cnt, b_rent_yn, b_isbn from tb_book inner join
+		tb_code on b_category = c_code
+		where b_bno = #{b_bno}
+
+	</select>
+</mapper>
+
+

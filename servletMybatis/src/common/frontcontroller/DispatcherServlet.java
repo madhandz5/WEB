@@ -2,7 +2,6 @@ package common.frontcontroller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,58 +11,82 @@ import javax.servlet.http.HttpServletResponse;
 
 import common.util.FileUtil;
 
-//@WebServlet("/DispatcherServlet")
 public class DispatcherServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
+	//º≠∫Í ƒ¡∆Æ∑—∑Ø∏¶ ∞¸∏Æ«œ¥¬ ∞¥√º
+	HandlerMapping hm = new HandlerMapping();
+	HandlerAdapter ha = new HandlerAdapter();   
+	/**
+     * @see HttpServlet#HttpServlet()
+     */
+	
+    public DispatcherServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+    
 
-	private HandlerMapping hm = new HandlerMapping();
-	private HandlerAdapter ha = new HandlerAdapter();
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		request.setCharacterEncoding("utf-8");
+		ModelAndView mav = new ModelAndView();
 
-	public DispatcherServlet() {
-		super();
-	}
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+		//≈¨∂Û¿Ãæ∆Æ∞° ø‰√ª ∫∏≥Ω URI∏¶ ¿˙¿Â
 		String[] uriArr = request.getRequestURI().split("/");
-		System.out.println(Arrays.toString(uriArr));
-
-		Controller ctr = hm.getController(uriArr);
-		String methodName = hm.getMethod(uriArr);
-		ModelAndView mav = ha.excute(ctr, methodName, request);
-
-		// viewÎ°ú Ï†ÑÏÜ°
-		if (mav.getView().equals("ajax")) {
-			PrintWriter pw = response.getWriter();
-			String res = (String) mav.getData().get("userId");
-			pw.write(res);
-
-		} else if (mav.getView().equals("file")) {
-			FileUtil fu = new FileUtil();
-			if (!fu.fileDownload(mav, response)) {
-				mav.addObject("alertMsg", "ÌååÏùº Îã§Ïö¥Î°úÎìúÏóê Ïã§Ìå®ÌñàÏäµÎãàÎã§.");
-				mav.addObject("back", "back");
-				mav.setView("common/result");
-				ViewResolver vr = new ViewResolver(mav.getView());
-				RequestDispatcher rd = request.getRequestDispatcher(vr.getView());
+		
+			//Controller Ω««‡
+			mav = ha.excute(hm.getController(uriArr), hm.getMethod(uriArr), request);
+					
+			//view∑Œ ¿¸º€
+			if(mav.getView().equals("ajax")) {
+				PrintWriter pw = response.getWriter();
+				String res = (String)mav.getData().get("res");
+				pw.write(res);
+				
+			}else if(mav.getView().equals("file")) {
+				
+				FileUtil fu = new FileUtil();
+				if(fu.fileDownload(mav, response)) {
+					
+				}else{
+					mav.addObject("alertMsg", "∆ƒ¿œ¥ŸøÓ∑ŒµÂø° Ω«∆–«œø¥Ω¿¥œ¥Ÿ.");
+					mav.addObject("url", "location.href");
+					mav.setView("common/result");
+					
+					request.setAttribute("data", mav.getData());
+					RequestDispatcher rd = request.getRequestDispatcher(mav.getView());
+					rd.forward(request, response);
+				};
+				
+			}else {
+				request.setAttribute("data", mav.getData());
+				RequestDispatcher rd = request.getRequestDispatcher(mav.getView());
 				rd.forward(request, response);
 			}
-
-		} else {
-			request.setAttribute("data", mav.getData());
-			ViewResolver vr = new ViewResolver(mav.getView());
-			RequestDispatcher rd = request.getRequestDispatcher(vr.getView());
-			rd.forward(request, response);
-
-		}
-
+		
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+	
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

@@ -1,73 +1,105 @@
 package bm.notice.model.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.openqa.selenium.remote.Command;
+
 import bm.notice.model.dao.NoticeDao;
 import bm.notice.model.vo.Notice;
 import common.JDBCTemplate;
+import common.db.SqlMapConfig;
+import common.exception.BMException;
+import common.frontcontroller.ModelAndView;
 import common.util.Paging;
 
 public class NoticeService {
 
 	JDBCTemplate jdt = JDBCTemplate.getInstance();
-	NoticeDao nDao = new NoticeDao();
+	SqlSessionFactory factory = SqlMapConfig.getInstance();
 
-	public Map<String, Object> selectNoticeList(String orderby, int currentPage, int cntPerPage) {
-		Map<String, Object> res = new HashMap<String, Object>();
-		Connection conn = jdt.getConnection();
+	NoticeDao ndao = new NoticeDao();
+
+	public NoticeService() {
+	}
+
+	public int insertNotice(Notice n) {
+		SqlSession session = factory.openSession(false);
+		int result = 0;
+		try {
+			result = ndao.insertNotice(session, n);
+			session.commit();
+		} catch (SQLException e) {
+			session.rollback();
+			e.printStackTrace();
+			new BMException(e.getMessage());
+		} finally {
+			session.close();
+		}
+
+		return result;
+	}
+
+	public int deleteNotice(int noticeNo) {
+
+		SqlSession session = factory.openSession(false);
+		int result = 0;
+		try {
+			result = ndao.deleteNotice(session, noticeNo);
+			session.commit();
+		} catch (Exception e) {
+			session.rollback();
+			e.printStackTrace();
+			new BMException(e.getMessage());
+		} finally {
+			session.close();
+		}
+
+		return result;
+	}
+
+	public Map<String, Object> selectNoticeList(String orderby, int currentPage, int cntPerPage) throws Exception {
+
+		Map<String, Object> res = null;
+		SqlSession session = factory.openSession(false);
+		List<Notice> nlist = null;
 		Paging p = null;
-		List<Notice> nList = null;
 
 		try {
-			p = new Paging(nDao.contentCnt(conn), currentPage, cntPerPage);
-			nList = nDao.selectNoticeList(conn, p, orderby);
-			res.put("paging", p);
-			res.put("nList", nList);
-		} catch (SQLException e) {
+			p = new Paging(ndao.contentCnt(session), currentPage, cntPerPage);
+			nlist = ndao.selectNoticeList(session, p, orderby);
+			res.put("res", res);
+
+		} catch (Exception e) {
 			e.printStackTrace();
+			new BMException(e.getMessage());
 		} finally {
-			jdt.close(conn);
+			session.close();
 		}
 
 		return res;
 	}
 
-	public int noticeUpload(Notice notice) {
-		int res = 0;
-		Connection conn = jdt.getConnection();
+	public Notice noticeDetail(int noticeNo) throws Exception {
+		SqlSession session = factory.openSession(false);
+		Notice notice = new Notice();
 
 		try {
-			res = nDao.noticeUpload(conn, notice);
-			if (res >= 1) {
-				jdt.commit(conn);
-			} else {
-				jdt.rollback(conn);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+			notice = ndao.noticeDetail(session, noticeNo);
 		} finally {
-			jdt.close(conn);
-		}
-		return res;
-	}
-
-	public Notice noticeDetail(int noticeNo) {
-		Notice notice = null;
-		Connection conn = jdt.getConnection();
-
-		try {
-			notice = nDao.noticeDetail(conn, noticeNo);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			jdt.close(conn);
+			session.close();
 		}
 
 		return notice;
-	}
 
+	}
 }

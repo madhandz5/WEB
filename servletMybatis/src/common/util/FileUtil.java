@@ -1,3 +1,10 @@
+/**
+ * @PackageName: common.util
+ * @FileName : File.java
+ * @Date : 2020. 4. 22.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 package common.util;
 
 import java.io.BufferedInputStream;
@@ -6,88 +13,120 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.Date;
+import java.text.SimpleDateFormat;
 
+import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Decoder.Binary;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
-import com.sun.mail.iap.Response;
 
 import common.frontcontroller.ModelAndView;
-import common.vo.UploadFile;
 
+/**
+ * @PackageName: common.util
+ * @FileName : File.java
+ * @Date : 2020. 4. 22.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 public class FileUtil {
-
+	
 	public UploadFile fileUpload(String uploadFolder, HttpServletRequest request) {
-		UploadFile uf = new UploadFile();
-
+		
+		UploadFile uploadFile = new UploadFile();
+		
+		// ¾÷·ÎµåÇÒ ÆÄÀÏÀÇ ¿ë·® Á¦ÇÑ : 10Mbyte·Î Á¦ÇÑÇÑ´Ù¸é
 		int maxSize = 1024 * 1024 * 10;
-
 		String originFileName = "";
-
 		String renameFileName = "";
-
-		String root = request.getServletContext().getRealPath("/");
-
+		
+		// ÇØ´ç ÄÁÅ×ÀÌ³ÊÀÇ ±¸µ¿ÁßÀÎ À¥ ¾ÖÇÃ¸®ÄÉÀÌ¼ÇÀÇ ·çÆ® °æ·Î ¾Ë¾Æ³¿
+		String root = request.getSession().getServletContext().getRealPath("/");
 		String savePath = root + uploadFolder;
-
-		//requestë¥¼ MultipartRequestë¡œ êµì²´
-		//MultipartRequest ê°ì²´ê°€ ìƒì„±ë¨ê³¼ ë™ì‹œì— íŒŒì¼ ì—…ë¡œë“œê°€ ì´ë£¨ì–´ ì§„ë‹¤.
-		MultipartRequest mrequest;
+		
 		try {
-			mrequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new DefaultFileRenamePolicy());
-			originFileName = mrequest.getFilesystemName("noticeFile");
+			// request ¸¦ MultipartRequest °´Ã¼·Î º¯È¯ÇÔ
+			// MultipartRequestÀÇ °´Ã¼°¡ »ı¼ºµÊ°ú µ¿½Ã¿¡ ÆÄÀÏ ¾÷·Îµå°¡ ÀÌ·ç¾î Áø´Ù.
+			MultipartRequest mrequest = 
+					new MultipartRequest(request,savePath, maxSize, "UTF-8",
+					new DefaultFileRenamePolicy());
+		
+			originFileName = mrequest.getFilesystemName("file");
+			
 			if (originFileName != null) {
-				String fileName = String.valueOf(new Date().getTime());
-
-				renameFileName = fileName + originFileName.substring(originFileName.lastIndexOf("."));
-
+				//¾÷·ÎµµµÈ ÆÄÀÏ¸íÀ» "³â¿ùÀÏ½ÃºĞÃÊ.È®ÀåÀÚ" ·Î º¯°æÇÔ
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+				renameFileName = sdf.format(new java.sql.Date(System.currentTimeMillis())) + "."
+				+ originFileName.substring(originFileName.lastIndexOf(".") + 1);
+				
+				// ÆÄÀÏ¸í ¹Ù²Ù±âÇÏ·Á¸é File °´Ã¼ÀÇ renameTo() »ç¿ëÇÔ
 				File originFile = new File(savePath + "\\" + originFileName);
 				File renameFile = new File(savePath + "\\" + renameFileName);
-
 				originFile.renameTo(renameFile);
 			}
-
-			uf.setSuccess(true);
-			uf.setOriginalFileName(originFileName);
-			uf.setRenameFileName(renameFileName);
-			uf.setSavePath(savePath);
-			uf.setMrequest(mrequest);
+		
+			uploadFile.setIsSuccess(true);
+			uploadFile.setOriginalFilename(originFileName);
+			uploadFile.setRenameFileName(renameFileName);
+			uploadFile.setSavePath(savePath);
+			uploadFile.setMrequest(mrequest);;
+		
 		} catch (IOException e) {
-			e.printStackTrace();
-			uf.setSuccess(false);
-			uf.setOriginalFileName(originFileName);
+			
+			uploadFile.setIsSuccess(false);
+			uploadFile.setOriginalFilename(originFileName);
+			
 		}
-
-		return uf;
+		
+		return uploadFile;
 	}
-
+	
 	public boolean fileDownload(ModelAndView mav, HttpServletResponse response) {
+		
+		boolean res = false;
+		
+		//file°´Ã¼ »ı¼º
 		File downFile = new File((String) mav.getData().get("path"));
-		String ofName = (String) mav.getData().get("ofName");
-		ServletOutputStream downOutput;
+		String ofname = (String) mav.getData().get("ofname");
+		
+		//Çì´õ ¼³Á¤ + ÆÄÀÏ ÀÌ¸§ ÀÎÄÚµù
 		try {
-			response.setHeader("Content-Disposition", "attachment);filename=" + URLEncoder.encode(ofName, "UTF-8"));
-			downOutput = response.getOutputStream();
-			BufferedInputStream bin = new BufferedInputStream(new FileInputStream(downFile));
-			int read = 0;
-			while ((read = bin.read()) < -1) {
-				downOutput.write(read);
-				downOutput.flush();
-			}
-			downOutput.close();
-			bin.close();
-			return true;
+			response.setHeader("Content-Disposition", "attachment; filename=" + 
+					URLEncoder.encode(ofname,"UTF-8"));
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		
+		response.setContentLength((int)downFile.length());
+		
+		//Å¬¶óÀÌ¾ğÆ®·Î ³»º¸³¾ Ãâ·Â ½ºÆ®¸² »ı¼º
+		ServletOutputStream downOut;
+		
+		try {
+			
+			downOut = response.getOutputStream();
+			BufferedInputStream bin = new BufferedInputStream(
+					new FileInputStream(downFile));
+			
+			int read = 0;
+			while((read = bin.read()) != -1){
+				downOut.write(read);
+				downOut.flush();
+			}
+			
+			downOut.close();
+			bin.close();
+			res = true;
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
 	}
-
 }

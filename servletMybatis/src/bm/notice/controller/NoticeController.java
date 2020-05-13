@@ -1,106 +1,131 @@
+/**
+ * @PackageName: bm.notice.controller
+ * @FileName : NoticeController.java
+ * @Date : 2020. 4. 20.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 package bm.notice.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import bm.member.model.vo.Member;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 import bm.notice.model.service.NoticeService;
 import bm.notice.model.vo.Notice;
 import common.frontcontroller.Controller;
 import common.frontcontroller.ModelAndView;
 import common.util.FileUtil;
-import common.vo.UploadFile;
+import common.util.UploadFile;
 
+/**
+ * @PackageName: bm.notice.controller
+ * @FileName : NoticeController.java
+ * @Date : 2020. 4. 20.
+ * @ÇÁ·Î±×·¥ ¼³¸í : 
+ * @author 
+ */
 public class NoticeController implements Controller {
 
-	NoticeService ns = new NoticeService();
+	private NoticeService ns = new NoticeService();
 
-	public ModelAndView noticeList(HttpServletRequest request) {
+	public ModelAndView noticeList(HttpServletRequest request) throws Exception {
+
 		ModelAndView mav = new ModelAndView();
-		int currentPage = 1;
-		int cntPerPage = 5;
-		String orderby = "noticeno";
 
-		Map<String, Object> res = ns.selectNoticeList(orderby, currentPage, cntPerPage);
-		mav.addObject("paging", res.get("paging"));
-		mav.addObject("nData", res.get("nList"));
-		mav.setView("board/boardList");
+		int currentPage = 1;
+		int cntPerPage = 10;
+		String orderby = "noticeno";
 
 		if (request.getParameter("cPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("cPage"));
 		}
 
 		if (request.getParameter("cntPerPage") != null) {
-			cntPerPage = Integer.parseInt(request.getParameter("cntPerPage"));
+			currentPage = Integer.parseInt(request.getParameter("cntPerPage"));
+		}
+
+		Map<String, Object> res = ns.selectNoticeList(orderby, currentPage, cntPerPage);
+		mav.addObject("paging", res.get("paging"));
+		System.out.println(res.get("paging"));
+
+		mav.addObject("mdata", res);
+		mav.setView("board/boardList");
+
+		return mav;
+	}
+
+	public ModelAndView noticeDetail(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		Notice notice = ns.noticeDetail(noticeNo);
+
+		if (notice != null) {
+			mav.setView("board/boardView");
+			mav.addObject("notice", notice);
+		} else {
+			mav.setView("index/index");
 		}
 
 		return mav;
 	}
 
-	public ModelAndView noticeUpload(HttpServletRequest request) throws IOException {
+	public ModelAndView noticeWrite(HttpServletRequest request) throws IOException {
+
 		ModelAndView mav = new ModelAndView();
-		Member member = (Member) request.getSession().getAttribute("loginInfo");
-
-		String uploadFolder = "resources/upload";
-		UploadFile uf = new FileUtil().fileUpload(uploadFolder, request);
-
-		if (uf.isSuccess()) {
-			mav.addObject("alertMsg", "ê²Œì‹œë¬¼ ë“±ë¡ì´ ì„±ê³µë˜ì—ˆìŠµë‹ˆë‹¤.");
-			Notice notice = new Notice();
-			notice.setNoticeTitle(uf.getMrequest().getParameter("noticeTitle"));
-			notice.setNoticeContent(uf.getMrequest().getParameter("noticeContent"));
-			notice.setNoticeWriter(member.getM_id());
-			notice.setOriginal_filepath(uf.getOriginalFileName());
-			notice.setRename_filepath(uf.getRenameFileName());
-
-			if (ns.noticeUpload(notice) > 0) {
-				mav.addObject("alertMsg", "ê²Œì‹œë¬¼ ë“±ë¡ì´ ì„±ê³µí•˜ì˜€ìŠµë‹ˆë‹¤.");
-				mav.addObject("url", "/servletBM/notice/noticelist.do");
-				mav.setView("common/result");
-			} else {
-				mav.addObject("alertMsg", "ê²Œì‹œë¬¼ ë“±ë¡ì´ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
-				mav.addObject("back", "back");
-				mav.setView("common/result");
-			}
-			mav.setView("common/result");
-		}
-		return mav;
-	}
-
-	public ModelAndView noticeWrite(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-
 		mav.setView("board/boardForm");
 		return mav;
 	}
 
-	public ModelAndView noticeDetail(HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView();
-		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		Notice notice = ns.noticeDetail(noticeNo);
+	public ModelAndView noticeUpload(HttpServletRequest request) throws IOException {
 
-		mav.addObject("notice", notice);
-		mav.setView("board/boardView");
+		ModelAndView mav = new ModelAndView();
+
+		String writer = request.getParameter("writer");
+
+		// ¾÷·ÎµåµÇ´Â ÆÄÀÏÀÌ ÀúÀåµÉ Æú´õ¸í°ú °æ·Î ¿¬°á Ã³¸®
+		String uploadFolder = "resources/upload";
+		UploadFile file = new FileUtil().fileUpload(uploadFolder, request);
+
+		Notice notice = new Notice();
+		notice.setNoticeTitle(file.getMrequest().getParameter("noticeTitle"));
+		notice.setNoticeWriter(file.getMrequest().getParameter("noticeWriter"));
+		notice.setNoticePassword(file.getMrequest().getParameter("noticePassword"));
+		notice.setNoticeContent(file.getMrequest().getParameter("noticeContent"));
+		notice.setNoticeWriter(writer);
+		notice.setOriginal_filepath(file.getOriginalFilename());
+		notice.setRename_filepath(file.getRenameFileName());
+
+		if (ns.insertNotice(notice) > 0) {
+			mav.addObject("alertMsg", "°Ô½Ã¹°ÀÌ Á¤»óÀûÀ¸·Î µî·ÏµÇ¾ú½À´Ï´Ù.");
+			mav.addObject("url", "/servletBM/notice/noticelist.do");
+			mav.setView("common/result");
+		} else {
+			mav.addObject("alertMsg", "°Ô½Ã¹° µî·Ï¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù.");
+			mav.addObject("back", "back");
+			mav.setView("common/result");
+		}
+
 		return mav;
 	}
 
-	public ModelAndView noticeDownload(HttpServletRequest request) {
+	public ModelAndView noticeDelete(HttpServletRequest request) {
+
 		ModelAndView mav = new ModelAndView();
+		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		ns.deleteNotice(noticeNo);
+		mav.setView("board/boardView");
 
-		String readFolder = request.getSession().getServletContext().getRealPath("/resources/upload");
-
-		String path = readFolder + "/" + request.getParameter("rfname");
-
-		String ofname = request.getParameter("ofname");
-
-		mav.addObject("path", path);
-		mav.addObject("obname", ofname);
-		mav.setView("file");
-		
 		return mav;
-
 	}
 
 }

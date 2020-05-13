@@ -1,116 +1,99 @@
 package bm.book.model.vo;
 
-import java.io.Serializable;
-import java.sql.Date;
-
-public class Book implements Serializable{
+public class Book {
 	
-	private static final long serialVersionUID = -8467771359424939056L;
-
-	/*B_BNO	NUMBER
-	B_CATEGORY	NUMBER(4,0)
-	B_TITLE	VARCHAR2(100 CHAR)
-	B_AUTHOR	VARCHAR2(100 CHAR)
-	B_REGDATE	DATE
-	B_RENT_YN	CHAR(1 CHAR)
-	B_RENT_CNT	NUMBER(6,0)
-	B_ISBN	VARCHAR2(50 BYTE)*/
-	
-	private int bBno;
-	private int bCategory;
-	private String bTitle;
-	private String bAuthor;
-	private Date bRegDate;
-	private String bRentYN;
-	private int bRentCnt;
-	private String bIsbn;
+	private int b_bno;
+	private String b_category;
+	private String b_title;
+	private String b_author;
+	private String b_rent_yn;
+	private int b_rent_cnt;
+	private String b_isbn;
 	
 	public Book() {
-		
-	}
-
-	public Book(int bBno, int bCategory, String bTitle, String bAuthor, Date bRegDate, String bRentYN, int bRentCnt,
-			String bIsbn) {
 		super();
-		this.bBno = bBno;
-		this.bCategory = bCategory;
-		this.bTitle = bTitle;
-		this.bAuthor = bAuthor;
-		this.bRegDate = bRegDate;
-		this.bRentYN = bRentYN;
-		this.bRentCnt = bRentCnt;
-		this.bIsbn = bIsbn;
+	}
+	
+	
+
+	public Book(int b_bno, String b_category, String b_title, String b_author, String b_rent_yn, int b_rent_cnt,
+			String b_isbn) {
+		super();
+		this.b_bno = b_bno;
+		this.b_category = b_category;
+		this.b_title = b_title;
+		this.b_author = b_author;
+		this.b_rent_yn = b_rent_yn;
+		this.b_rent_cnt = b_rent_cnt;
+		this.b_isbn = b_isbn;
 	}
 
-	public int getbBno() {
-		return bBno;
+	public int getB_bno() {
+		return b_bno;
 	}
 
-	public void setbBno(int bBno) {
-		this.bBno = bBno;
+	public void setB_bno(int b_bno) {
+		this.b_bno = b_bno;
 	}
 
-	public int getbCategory() {
-		return bCategory;
+	
+	public String getB_category() {
+		return b_category;
 	}
 
-	public void setbCategory(int bCategory) {
-		this.bCategory = bCategory;
+	public void setB_category(String b_category) {
+		this.b_category = b_category;
 	}
 
-	public String getbTitle() {
-		return bTitle;
+	public String getB_title() {
+		return b_title;
 	}
 
-	public void setbTitle(String bTitle) {
-		this.bTitle = bTitle;
+	public void setB_title(String b_title) {
+		this.b_title = b_title;
 	}
 
-	public String getbAuthor() {
-		return bAuthor;
+	public String getB_author() {
+		return b_author;
 	}
 
-	public void setbAuthor(String bAuthor) {
-		this.bAuthor = bAuthor;
+	public void setB_author(String b_author) {
+		this.b_author = b_author;
 	}
 
-	public Date getbRegDate() {
-		return bRegDate;
+	public String getB_rent_yn() {
+		return b_rent_yn;
 	}
 
-	public void setbRegDate(Date bRegDate) {
-		this.bRegDate = bRegDate;
+	public void setB_rent_yn(String b_rent_yn) {
+		this.b_rent_yn = b_rent_yn;
 	}
 
-	public String getbRentYN() {
-		return bRentYN;
+	public int getB_rent_cnt() {
+		return b_rent_cnt;
 	}
 
-	public void setbRentYN(String bRentYN) {
-		this.bRentYN = bRentYN;
+	public void setB_rent_cnt(int b_rent_cnt) {
+		this.b_rent_cnt = b_rent_cnt;
 	}
 
-	public int getbRentCnt() {
-		return bRentCnt;
+	public String getB_isbn() {
+		return b_isbn;
 	}
 
-	public void setbRentCnt(int bRentCnt) {
-		this.bRentCnt = bRentCnt;
+	public void setB_isbn(String b_isbn) {
+		this.b_isbn = b_isbn;
 	}
 
-	public String getbIsbn() {
-		return bIsbn;
-	}
 
-	public void setbIsbn(String bIsbn) {
-		this.bIsbn = bIsbn;
-	}
 
 	@Override
 	public String toString() {
-		return "Book [bBno=" + bBno + ", bCategory=" + bCategory + ", bTitle=" + bTitle + ", bAuthor=" + bAuthor
-				+ ", bRegDate=" + bRegDate + ", bRentYN=" + bRentYN + ", bRentCnt=" + bRentCnt + ", bIsbn=" + bIsbn
-				+ "]";
+		return "Book [b_bno=" + b_bno + ", b_category=" + b_category + ", b_title=" + b_title + ", b_author=" + b_author
+				+ ", b_rent_yn=" + b_rent_yn + ", b_rent_cnt=" + b_rent_cnt + ", b_isbn=" + b_isbn + "]";
 	}
-
+	
+	
+	
+	
 }

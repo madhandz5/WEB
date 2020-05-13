@@ -3,26 +3,23 @@ package common.frontcontroller;
 import java.util.HashMap;
 
 public class ModelAndView {
-
-	// view의 경로
+	
 	private String view = "";
-	// view보낼 데이터
-	private HashMap<String, Object> data = new HashMap<>();
-
+	private HashMap<String,Object> data = new HashMap<String, Object>();
+	
 	public ModelAndView() {
-
+		
 	}
-
-	public ModelAndView(String view, String key, Object value) {
-		super();
+	
+	public ModelAndView(String view, String key, String value) {
 		this.view = view;
-		data.put(key, value);
+		data.put(key,value);
 	}
-
+	
 	public void addObject(String key, Object value) {
-		data.put(key, value);
+		data.put(key,value);
 	}
-
+	
 	public void setView(String view) {
 		this.view = view;
 	}
@@ -35,4 +32,5 @@ public class ModelAndView {
 		return data;
 	}
 
+	
 }

@@ -1,3 +1,133 @@
--- member > idCheck íšŒì›ê°€ì… ì•„ì´ë””ì²´í¬ ì¿¼ë¦¬
-select * from TB_MEMBER;
-select m_id from tb_member where m_id = 'aaaa';
+--BMÀÎµ¦½º
+--ÀÎ±âµµ¼­
+select * from(
+select c_info, b_title, b_author, b_rent_cnt, b_rent_yn, b_isbn 
+from tb_book  
+inner join tb_code
+on b_category = c_code 
+order by b_rent_cnt desc 
+) where rownum < 5;
+
+--½ºÅ×µğ¼¿·¯
+select * from(
+select * from(
+select c_info, b_title, b_author, b_rent_cnt, b_rent_yn, b_regdate, b_isbn 
+from tb_book  
+inner join tb_code
+on b_category = c_code 
+order by b_rent_cnt desc
+) where rownum < 31
+order by b_regdate desc)
+where rownum < 5;
+
+--ÃÖ±Ù´ëÃâµµ¼­
+select * from(
+select c_info, b_title, b_author, b_rent_cnt, b_rent_yn, b_isbn 
+from tb_book b  
+inner join tb_rent_book rb using(b_bno)
+inner join tb_code on b_category = c_code 
+order by rb_regdate desc
+)
+where rownum < 5;
+
+--ÃÖ±ÙÀÔ°íµµ¼­
+select * from(
+select c_info, b_title, b_author, b_rent_cnt, b_rent_yn, b_isbn 
+from tb_book  
+inner join tb_code
+on b_category = c_code 
+order by b_regdate desc 
+) where rownum < 5;
+
+-------------------------------------------------------------
+
+--member
+--·Î±×ÀÎ
+select 
+m.m_id,m_email,c_info,m_tell,m_reg_date,m_rentable_date
+from 
+tb_member m
+inner join tb_code c on
+m_grade = c_code
+where 
+m_id = 'aaa' 
+and m_password = '1256812gk!';
+
+-------------------------------------------------------------
+
+--mypage
+--´ëÃâ °Ç º¸±â
+select * from tb_rent_master 
+where m_id = 'aaa'
+
+--´ëÃâ°Ç »ó¼¼º¸±â
+select 
+rm_idx, 
+rb.rb_idx, 
+rb.RB_REGDATE, 
+rb.RB_STATE, 
+rb.RB_RETURN_DATE, 
+b.B_TITLE
+b_bno
+from tb_rent_master rm
+inner join tb_rent_book rb using(rm_idx)
+inner join tb_book b using(b_bno)
+where m_id = 'aaa'
+
+
+
+-------------------------------------------------------------
+
+--book
+--µµ¼­Å°¿öµå°Ë»ö
+select c_info, b_title, b_bno,  b_author, b_rent_cnt, b_rent_yn, b_isbn 
+from tb_book  
+inner join tb_code
+on b_category = c_code 
+where b_title like '%³»°¡%';
+
+--µµ¼­»ó¼¼°Ë»ö
+select c_info, b_title, b_bno, b_author, b_rent_cnt, b_rent_yn, b_isbn 
+from tb_book  
+inner join tb_code
+on b_category = c_code 
+where b_isbn=9788972756194;
+
+-------------------------------------------------------------
+
+--use
+--µµ¼­´ëÃâ
+exec INSERT_RENT_INFO()
+
+--µµ¼­¹İ³³
+select * from(
+	select rownum rnum, r1.* from(
+		select * from 
+		tb_rent_master rm
+		inner join tb_rent_book rb using(rm_idx)
+		inner join tb_book using(b_bno)
+		order by rm_idx desc 
+	)r1
+	where m_id = 'aaa'
+)
+where rnum between 6 and 10;
+
+
+
+-------------------------------------------------------------
+
+--notice
+--°øÁö»çÇ× °Ô½ÃÆÇ
+select * from(
+	select rownum rnum, n1.* from(
+		select * from 
+		tb_notice
+		order by noticeno desc
+	)n1
+)
+where rnum between 6 and 10;
+
+select * from tb_member;
+
+
+

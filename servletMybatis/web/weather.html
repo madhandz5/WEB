@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<h1 id="wdata">오늘의 날씨</h1>
+<button onclick="jsAjax()">검색</button>
+
+<script type="text/javascript">
+
+	var xhr = new XMLHttpRequest();
+	
+	function ajaxInput(){
+		var res = xhr.response;
+		var wData = JSON.parse(res);
+		console.dir(document.querySelector('#wdata'));
+		document.querySelector('#wdata').innerText = (wData.weather)[0].description;
+	}
+
+	
+	function jsAjax(){
+		//시작줄
+		xhr.open('GET','http://api.openweathermap.org/data/2.5/weather?lat=37.562887499999995&lon=126.93019419999999&appid=f8623f0692e3030bc42fc7941ade2c93');
+		//헤더 설정
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		//통신이 성공적으로 끝나면 부를 함수
+		xhr.addEventListener('load',ajaxInput);
+		xhr.send();
+	}
+
+</script>
+
+</body>
+</html>

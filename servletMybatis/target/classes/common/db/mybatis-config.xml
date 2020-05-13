@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<properties resource="common/db/db.properties" />
+
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+
+	<!-- 타입에 별칭 붙여서 짧게 쓰기 -->
+	<typeAliases>
+		<typeAlias type="bm.book.model.vo.Book" alias="Book" />
+		<typeAlias type="bm.notice.model.vo.Notice" alias="Notice" />
+	</typeAliases>
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="common/db/mapper/bookMapper.xml" />
+		<mapper resource="common/db/mapper/noticeMapper.xml" />
+	</mappers>
+</configuration>
