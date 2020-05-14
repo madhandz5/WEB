@@ -1,5 +1,7 @@
 package bm.book.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -58,5 +60,24 @@ public class BookController implements Controller {
 		mav.addObject("book", res);
 		mav.setView("book/bookDetail");
 		return mav;
+	}
+
+	public ModelAndView innerSearchBook(HttpServletRequest request) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		String[] bnoList = request.getParameterValues("bnoList");
+		System.out.println(Arrays.toString(bnoList));
+		String title = request.getParameter("title");
+		String orderBy = request.getParameter("orderBy");
+		Map<String, Object> commandMap = new HashMap<String, Object>();
+		commandMap.put("bnoList", bnoList);
+		commandMap.put("title", title);
+		commandMap.put("orderBy", orderBy);
+
+		List<Book> res = bs.selectInnerBookSearchList(commandMap);
+		mav.addObject("bookList", res);
+		mav.setView("book/booksearch");
+
+		return mav;
+
 	}
 }

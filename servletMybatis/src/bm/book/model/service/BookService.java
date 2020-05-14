@@ -8,6 +8,7 @@
 package bm.book.model.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,22 @@ public class BookService {
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new BMException("도서검색 중 에러가 발생했습니다.");
+		} finally {
+			session.close();
+		}
+
+		return res;
+	}
+
+	public List<Book> selectInnerBookSearchList(Map<String, Object> commandMap) throws BMException {
+		List<Book> res = new ArrayList<>();
+		SqlSession session = factory.openSession(false);
+
+		try {
+			res = bd.selectInnerBookSearchList(session, commandMap);
+		} catch (Exception e) {
+			e.printStackTrace();
+			new BMException("도서 재검색도중 에러가 발생하였습니다.");
 		} finally {
 			session.close();
 		}

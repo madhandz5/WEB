@@ -11,6 +11,7 @@
 		tb_code on b_category = c_code where b_rent_yn =
 		'N' and b_title
 		like'%'||#{title}||'%'
+
 	</select>
 
 	<resultMap type="map" id="resultBook">
@@ -29,7 +30,29 @@
 		b_author, b_rent_cnt, b_rent_yn, b_isbn from tb_book inner join
 		tb_code on b_category = c_code
 		where b_bno = #{b_bno}
+	</select>
 
+	<select id="selectInnerBookSearchList" resultType="Book">
+		select c_info, b_title,
+		b_bno, b_author, b_rent_cnt, b_rent_yn, b_isbn from tb_book inner join
+		tb_code on b_category = c_code where b_rent_yn='N'
+		and b_bno in
+		<foreach collection="bnoList" item="b_bno" index="i" open="(" close=")" separator=",">
+			#{b_bno}
+		</foreach>
+		and b_title like'%'||#{title}||'%'
+		<!-- <if test="orderBy != null"> order by ${orderBy} desc </if> -->
+		<choose>
+			<when test="orderBy = B_RENT_CNT">
+				order by B_RENT_CNT desc
+			</when>
+			<when test="orderBy = B_REGDATE">
+				order by B_REGDATE desc
+			</when>
+			<otherwise>
+				order by b_bno desc
+			</otherwise>
+		</choose>
 	</select>
 </mapper>
 

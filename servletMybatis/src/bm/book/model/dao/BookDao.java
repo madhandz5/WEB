@@ -7,6 +7,7 @@
  */
 package bm.book.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,11 @@ public class BookDao {
 	public Map<String, String> selectBook(SqlSession session, int b_bno) throws Exception {
 
 		return session.selectOne("Book.selectBook", b_bno);
+	}
+
+	public List<Book> selectInnerBookSearchList(SqlSession session, Map<String, Object> commandMap) throws Exception {
+
+		return session.selectList("Book.selectInnerBookSearchList",commandMap);
 	}
 
 }
